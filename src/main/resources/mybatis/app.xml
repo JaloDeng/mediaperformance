@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.foshanplus.mediaperformance.mapper.AppMapper" >
+
+	<!-- Result Map-->
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.App" >
+		<result column="id" property="id"/>
+		<result column="app_publish_time" property="appPublishTime"/>
+		<result column="category" property="category"/>
+		<result column="app_title" property="appTitle"/>
+		<result column="author" property="author"/>
+		<result column="article_type" property="articleType"/>
+		<result column="editor" property="editor"/>
+		<result column="word_count" property="wordCount"/>
+		<result column="click_count" property="clickCount"/>
+		<result column="url" property="url"/>
+		<result column="level" property="level"/>
+		<result column="score" property="score"/>
+		<result column="create_user" property="createUser"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_user" property="updateUser"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+	
+	<!-- sys_user table all fields -->
+	<sql id="Base_Column_List" >
+		id, app_publish_time, category, app_title, author, article_type, editor, word_count, click_count, 
+		url, level, score, create_user, create_time, update_user, update_time
+	</sql>
+	
+	<select id="queryById" resultMap="BaseResultMap">
+		select a.* from t_app a where a.id = #{id}
+	</select>
+	
+	<select id="find" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List" /> 
+		FROM t_app
+		<where>
+		<if test="publishTimeStart != null and publishTimeStart != '' and publishTimeEnd != null and publishTimeEnd != ''">
+			AND publishTime between #{publishTimeStart} AND #{publishTimeEnd}
+		</if>
+		<if test="category != null and category != ''">
+			AND category = #{category}
+		</if>
+		<if test="title != null and title != ''">
+			AND app_title = #{title}
+		</if>
+		<if test="author != null and author != ''">
+			AND author = #{author}
+		</if>
+		<if test="articleType != null and articleType != ''">
+			AND article_type = #{articleType}
+		</if>
+		<if test="editor != null and editor != ''">
+			AND editor = #{editor}
+		</if>
+		<if test="level != null and level != ''">
+			AND level = #{level}
+		</if>
+		<if test="isScore != null ">
+		<choose>
+			<when test="isScore = '1'">
+				AND score != ''
+			</when>
+			<otherwise>
+				AND score = ''
+			</otherwise>
+		</choose>
+		</if>
+		</where>
+	</select>
+	
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.App">
+		INSERT INTO t_app(app_publish_time, category, app_title, author, article_type, editor, word_count, click_count
+			, url, level, score, create_user, create_time, update_user, update_time)
+		values(#{appPublishTime}, #{category}, #{appTitle}, #{author}, #{articleType}, #{editor}, #{wordCount}, #{clickCount}
+			, #{url}, #{level}, #{score}, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.App">
+		update t_app
+		<set>
+			<if test="appPublishTime != null">
+				app_publish_time = #{appPublishTime,jdbcType=VARCHAR},
+			</if>
+			<if test="category != null">
+				category = #{category,jdbcType=VARCHAR},
+			</if>
+			<if test="appTitle != null">
+				app_title = #{appTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="author != null">
+				author = #{author,jdbcType=VARCHAR},
+			</if>
+			<if test="articleType != null">
+				article_type = #{articleType,jdbcType=VARCHAR},
+			</if>
+			<if test="editor != null">
+				editor = #{editor,jdbcType=VARCHAR},
+			</if>
+			<if test="wordCount != null">
+				wordCount = #{wordCount,jdbcType=INT},
+			</if>
+			<if test="clickCount != null">
+				clickCount = #{clickCount,jdbcType=INT},
+			</if>
+			<if test="url != null">
+				url = #{url,jdbcType=VARCHAR},
+			</if>
+			<if test="level != null">
+				level = #{level,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null">
+				score = #{score,jdbcType=INT},
+			</if>
+			<if test="updateUser != null">
+				updateUser = #{updateUser,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				updateTime = #{updateTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_app WHERE id = #{id}
+	</delete>
+	
+</mapper>
