@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.foshanplus.mediaperformance.mapper.AppMapper" >
+<mapper namespace="com.foshanplus.mediaperformance.mapper.ArticleMapper" >
 
 	<!-- Result Map-->
-	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.App" >
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
 		<result column="id" property="id"/>
-		<result column="app_publish_time" property="appPublishTime"/>
+		<result column="paper_publish_time" property="paperPublishTime"/>
+		<result column="page" property="page"/>
 		<result column="category" property="category"/>
-		<result column="app_title" property="appTitle"/>
+		<result column="paper_title" property="paperTitle"/>
 		<result column="author" property="author"/>
 		<result column="article_type" property="articleType"/>
 		<result column="editor" property="editor"/>
+		<result column="app_title" property="appTitle"/>
+		<result column="app_publish_time" property="appPublishTime"/>
 		<result column="word_count" property="wordCount"/>
 		<result column="click_count" property="clickCount"/>
 		<result column="url" property="url"/>
@@ -24,17 +27,25 @@
 	</resultMap>
 	
 	<!-- sys_user table all fields -->
-	<sql id="Base_Column_List" >
-		id, app_publish_time, category, app_title, author, article_type, editor, word_count, click_count, 
-		url, level, score, create_user, create_time, update_user, update_time
+	<sql id="App_List" >
+		id, category, author, article_type, editor, app_title, app_publish_time, 
+		word_count, click_count, url, level, score, create_user, create_time, update_user, update_time
+	</sql>
+	<sql id="Paper_List" >
+		id, paper_publish_time, page, category, paper_title, author, article_type, editor,
+		word_count, level, score, create_user, create_time, update_user, update_time
+	</sql>
+	<sql id="App_Paper_List" >
+		id, paper_publish_time, page, category, paper_title, author, article_type, editor, app_title, app_publish_time, 
+		word_count, click_count, url, level, score, create_user, create_time, update_user, update_time
 	</sql>
 	
-	<select id="queryById" resultMap="BaseResultMap">
+	<select id="queryAppById" resultMap="BaseResultMap">
 		select a.* from t_app a where a.id = #{id}
 	</select>
 	
-	<select id="find" resultMap="BaseResultMap">
-		SELECT <include refid="Base_Column_List" /> 
+	<select id="findApp" resultMap="BaseResultMap">
+		SELECT <include refid="App_List" />
 		FROM t_app
 		<where>
 		<if test="publishTimeStart != null and publishTimeStart != '' and publishTimeEnd != null and publishTimeEnd != ''">
@@ -44,21 +55,21 @@
 			AND category = #{category}
 		</if>
 		<if test="title != null and title != ''">
-			AND app_title = #{title}
+			AND app_title like CONCAT('%', '${title}', '%')
 		</if>
 		<if test="author != null and author != ''">
-			AND author = #{author}
+			AND author like CONCAT('%', '${author}', '%')
 		</if>
 		<if test="articleType != null and articleType != ''">
 			AND article_type = #{articleType}
 		</if>
 		<if test="editor != null and editor != ''">
-			AND editor = #{editor}
+			AND editor like CONCAT('%', '${editor}', '%')
 		</if>
 		<if test="level != null and level != ''">
 			AND level = #{level}
 		</if>
-		<if test="isScore != null ">
+		<if test="isScore != null and isScore != '' ">
 		<choose>
 			<when test="isScore = '1'">
 				AND score != ''
@@ -71,7 +82,7 @@
 		</where>
 	</select>
 	
-	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.App">
+	<insert id="addApp" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		INSERT INTO t_app(app_publish_time, category, app_title, author, article_type, editor, word_count, click_count
 			, url, level, score, create_user, create_time, update_user, update_time)
 		values(#{appPublishTime}, #{category}, #{appTitle}, #{author}, #{articleType}, #{editor}, #{wordCount}, #{clickCount}
@@ -79,7 +90,7 @@
 		)
 	</insert>
 	
-	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.App">
+	<update id="updateApp" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		update t_app
 		<set>
 			<if test="appPublishTime != null">
@@ -125,7 +136,7 @@
 		where id = #{id}
 	</update>
 	
-	<delete id="delete" parameterType="java.lang.Long">
+	<delete id="deleteApp" parameterType="java.lang.Long">
 		DELETE FROM t_app WHERE id = #{id}
 	</delete>
 	

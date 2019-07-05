@@ -3,7 +3,7 @@ package com.foshanplus.mediaperformance.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.foshanplus.mediaperformance.bean.App;
+import com.foshanplus.mediaperformance.bean.Article;
 
 /**
  * @author Jalo Deng
@@ -11,8 +11,8 @@ import com.foshanplus.mediaperformance.bean.App;
  * @date 2019-07-04 14:06
  */
 
-public interface AppMapper {
+public interface ArticleMapper {
 
-	public List<App> find(Map<String, Object> params);
+	public List<Article> findApp(Map<String, Object> params);
 	
 }

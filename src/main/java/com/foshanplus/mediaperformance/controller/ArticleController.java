@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.foshanplus.mediaperformance.bean.App;
+import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.service.ArticleService;
 
 /**
@@ -28,7 +28,7 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@GetMapping("/app")
-	public List<App> findApp(Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+	public List<Article> findApp(Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
 		return articleService.findApp(params);
 	}
 }

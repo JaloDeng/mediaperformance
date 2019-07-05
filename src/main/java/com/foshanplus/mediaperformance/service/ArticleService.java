@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.foshanplus.mediaperformance.bean.App;
-import com.foshanplus.mediaperformance.mapper.AppMapper;
+import com.foshanplus.mediaperformance.bean.Article;
+import com.foshanplus.mediaperformance.mapper.ArticleMapper;
 
 /**
  * @author Jalo Deng
@@ -19,10 +19,10 @@ import com.foshanplus.mediaperformance.mapper.AppMapper;
 public class ArticleService {
 
 	@Autowired
-	private AppMapper appMapper;
+	private ArticleMapper articleMapper;
 	
-	public List<App> findApp(Map<String, Object> params) {
-		return appMapper.find(params);
+	public List<Article> findApp(Map<String, Object> params) {
+		return articleMapper.findApp(params);
 	}
 	
 }

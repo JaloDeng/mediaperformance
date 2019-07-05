@@ -12,7 +12,13 @@ public class Article {
 	
 	private Long id;
 	
+	private Date paperPublishTime;
+	
+	private String page;
+	
 	private String category;
+	
+	private String paperTitle;
 	
 	private String author;
 	
@@ -20,7 +26,15 @@ public class Article {
 	
 	private String editor;
 	
+	private String appTitle;
+	
+	private Date appPublishTime;
+	
 	private String wordCount;
+	
+	private String clickCount;
+	
+	private String url;
 	
 	private String level;
 	
@@ -42,12 +56,36 @@ public class Article {
 		this.id = id;
 	}
 
+	public Date getPaperPublishTime() {
+		return paperPublishTime;
+	}
+
+	public void setPaperPublishTime(Date paperPublishTime) {
+		this.paperPublishTime = paperPublishTime;
+	}
+
+	public String getPage() {
+		return page;
+	}
+
+	public void setPage(String page) {
+		this.page = page;
+	}
+
 	public String getCategory() {
 		return category;
 	}
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public String getPaperTitle() {
+		return paperTitle;
+	}
+
+	public void setPaperTitle(String paperTitle) {
+		this.paperTitle = paperTitle;
 	}
 
 	public String getAuthor() {
@@ -74,12 +112,44 @@ public class Article {
 		this.editor = editor;
 	}
 
+	public String getAppTitle() {
+		return appTitle;
+	}
+
+	public void setAppTitle(String appTitle) {
+		this.appTitle = appTitle;
+	}
+
+	public Date getAppPublishTime() {
+		return appPublishTime;
+	}
+
+	public void setAppPublishTime(Date appPublishTime) {
+		this.appPublishTime = appPublishTime;
+	}
+
 	public String getWordCount() {
 		return wordCount;
 	}
 
 	public void setWordCount(String wordCount) {
 		this.wordCount = wordCount;
+	}
+
+	public String getClickCount() {
+		return clickCount;
+	}
+
+	public void setClickCount(String clickCount) {
+		this.clickCount = clickCount;
+	}
+
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	public String getLevel() {
@@ -129,5 +199,5 @@ public class Article {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
+
 }
