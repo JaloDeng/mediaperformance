@@ -44,7 +44,7 @@
 		select a.* from t_app a where a.id = #{id}
 	</select>
 	
-	<select id="findApp" resultMap="BaseResultMap">
+	<select id="findApp" parameterType="Object" resultMap="BaseResultMap">
 		SELECT <include refid="App_List" />
 		FROM t_app
 		<where>
@@ -54,8 +54,8 @@
 		<if test="category != null and category != ''">
 			AND category = #{category}
 		</if>
-		<if test="title != null and title != ''">
-			AND app_title like CONCAT('%', '${title}', '%')
+		<if test="appTitle != null and appTitle != ''">
+			AND app_title like CONCAT('%', '${appTitle}', '%')
 		</if>
 		<if test="author != null and author != ''">
 			AND author like CONCAT('%', '${author}', '%')

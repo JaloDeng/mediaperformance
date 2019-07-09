@@ -7,11 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foshanplus.mediaperformance.bean.Article;
+import com.foshanplus.mediaperformance.result.Result;
 import com.foshanplus.mediaperformance.service.ArticleService;
 
 /**
@@ -27,8 +29,8 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	
-	@GetMapping("/app")
-	public List<Article> findApp(Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+	@PostMapping("/app")
+	public Result<List<Article>> findApp(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
 		return articleService.findApp(params);
 	}
 }
