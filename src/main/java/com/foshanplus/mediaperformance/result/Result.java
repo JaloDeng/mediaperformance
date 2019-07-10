@@ -12,40 +12,63 @@ public class Result<T> {
 	
 	private String message;
 	
-	private Long page;
+	private Integer pageNum;
 	
-	private Long size;
+	private Integer pageSize;
 	
 	private Boolean success;
 	
 	private Long total;
 	
-	private Long totalPage;
+	private Integer pages;
 	
 	public Result() {}
 
-	public Result(T data, Long page, Long size, Long total, Long totalPage) {
+	/**
+	 * 结果集
+	 * @param data 数据
+	 * @param pageNum 当前页
+	 * @param pageSize 当前页的数据量
+	 * @param total 总数据量
+	 * @param pages 总页数
+	 */
+	public Result(T data, Integer pageNum, Integer pageSize, Long total, Integer pages) {
 		this.data = data;
-		this.page = page;
-		this.size = size;
+		this.pageNum = pageNum;
+		this.pageSize = pageSize;
 		this.success = true;
 		this.total = total;
-		this.totalPage = totalPage;
+		this.pages = pages;
 	}
 	
+	/**
+	 * 结果集
+	 * @param message 信息
+	 * @param success true:成功, false:失败
+	 */
 	public Result(String message, Boolean success) {
 		this.message = message;
 		this.success = success;
 	}
 	
-	public Result(T data, String message, Long page, Long size, Boolean success, Long total, Long totalPage) {
+	/**
+	 * 结果集
+	 * @param data 数据
+	 * @param message 信息
+	 * @param pageNum 当前页
+	 * @param pageSize 当前页的数据量
+	 * @param success true:成功, false:失败
+	 * @param total 总数据量
+	 * @param pages 总页数
+	 */
+	public Result(T data, String message, Integer pageNum, Integer pageSize, Boolean success, Long total, Integer pages) {
 		this.data = data;
 		this.message = message;
-		this.page = page;
-		this.size = size;
+		this.pageNum = pageNum;
+		this.pageSize = pageSize;
 		this.success = success;
 		this.total = total;
-		this.totalPage = totalPage;
+		this.pages = pages;
 	}
 
 	public T getData() {
@@ -64,20 +87,20 @@ public class Result<T> {
 		this.message = message;
 	}
 
-	public Long getPage() {
-		return page;
+	public Integer getPageNum() {
+		return pageNum;
 	}
 
-	public void setPage(Long page) {
-		this.page = page;
+	public void setPageNum(Integer pageNum) {
+		this.pageNum = pageNum;
 	}
 
-	public Long getSize() {
-		return size;
+	public Integer getPageSize() {
+		return pageSize;
 	}
 
-	public void setSize(Long size) {
-		this.size = size;
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
 	public Boolean getSuccess() {
@@ -96,12 +119,12 @@ public class Result<T> {
 		this.total = total;
 	}
 
-	public Long getTotalPage() {
-		return totalPage;
+	public Integer getPages() {
+		return pages;
 	}
 
-	public void setTotalPage(Long totalPage) {
-		this.totalPage = totalPage;
+	public void setPages(Integer pages) {
+		this.pages = pages;
 	}
 	
 }

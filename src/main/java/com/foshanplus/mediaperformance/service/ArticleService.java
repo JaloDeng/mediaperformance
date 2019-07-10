@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.mapper.ArticleMapper;
 import com.foshanplus.mediaperformance.result.Result;
+import com.github.pagehelper.Page;
 
 /**
  * @author Jalo Deng
@@ -23,7 +24,8 @@ public class ArticleService {
 	private ArticleMapper articleMapper;
 	
 	public Result<List<Article>> findApp(Map<String, Object> params) {
-		return new Result<List<Article>>(articleMapper.findApp(params), 1L, 1L, 1L, 1L);
+		Page<Article> articles = articleMapper.findApp(params);
+		return new Result<List<Article>>(articles, articles.getPageNum(), articles.getPageSize(), articles.getTotal(), articles.getPages());
 	}
 	
 }

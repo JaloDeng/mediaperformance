@@ -1,9 +1,9 @@
 package com.foshanplus.mediaperformance.mapper;
 
-import java.util.List;
 import java.util.Map;
 
 import com.foshanplus.mediaperformance.bean.Article;
+import com.github.pagehelper.Page;
 
 /**
  * @author Jalo Deng
@@ -13,6 +13,6 @@ import com.foshanplus.mediaperformance.bean.Article;
 
 public interface ArticleMapper {
 
-	public List<Article> findApp(Map<String, Object> params);
+	public Page<Article> findApp(Map<String, Object> params);
 	
 }
