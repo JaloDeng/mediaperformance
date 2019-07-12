@@ -13,6 +13,6 @@ import com.github.pagehelper.Page;
 
 public interface ArticleMapper {
 
-	public Page<Article> findApp(Map<String, Object> params);
+	public Page<Article> find(Map<String, Object> params);
 	
 }

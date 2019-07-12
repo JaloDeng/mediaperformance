@@ -6,15 +6,16 @@
 	<!-- Result Map-->
 	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
 		<result column="id" property="id"/>
+		<result column="type" property="type"/>
 		<result column="paper_publish_time" property="paperPublishTime"/>
+		<result column="app_publish_time" property="appPublishTime"/>
 		<result column="page" property="page"/>
 		<result column="category" property="category"/>
-		<result column="paper_title" property="paperTitle"/>
-		<result column="author" property="author"/>
 		<result column="article_type" property="articleType"/>
-		<result column="editor" property="editor"/>
+		<result column="paper_title" property="paperTitle"/>
 		<result column="app_title" property="appTitle"/>
-		<result column="app_publish_time" property="appPublishTime"/>
+		<result column="author" property="author"/>
+		<result column="editor" property="editor"/>
 		<result column="word_count" property="wordCount"/>
 		<result column="click_count" property="clickCount"/>
 		<result column="url" property="url"/>
@@ -27,32 +28,39 @@
 	</resultMap>
 	
 	<!-- sys_user table all fields -->
-	<sql id="App_List" >
-		id, category, author, article_type, editor, app_title, app_publish_time, 
-		word_count, click_count, url, level, score, create_user, create_time, update_user, update_time
-	</sql>
-	<sql id="Paper_List" >
-		id, paper_publish_time, page, category, paper_title, author, article_type, editor,
-		word_count, level, score, create_user, create_time, update_user, update_time
-	</sql>
-	<sql id="App_Paper_List" >
-		id, paper_publish_time, page, category, paper_title, author, article_type, editor, app_title, app_publish_time, 
+	<sql id="Article_List" >
+		id, type, paper_publish_time, app_publish_time, page, category, article_type, paper_title, app_title, author, editor,
 		word_count, click_count, url, level, score, create_user, create_time, update_user, update_time
 	</sql>
 	
 	<select id="queryAppById" resultMap="BaseResultMap">
-		select a.* from t_app a where a.id = #{id}
+		select <include refid="Article_List" /> from t_article a where a.id = #{id}
 	</select>
 	
-	<select id="findApp" parameterType="Object" resultMap="BaseResultMap">
-		SELECT <include refid="App_List" />
-		FROM t_app
+	<select id="find" parameterType="Object" resultMap="BaseResultMap">
+		SELECT <include refid="Article_List" />
+		FROM t_article
 		<where>
-		<if test="publishTimeStart != null and publishTimeStart != '' and publishTimeEnd != null and publishTimeEnd != ''">
-			AND publishTime between #{publishTimeStart} AND #{publishTimeEnd}
+		<if test="type != null and type != ''">
+			AND type = #{type}
+		</if>
+		<if test="paperStartTime != null and paperStartTime != '' and paperEndTime != null and paperEndTime != ''">
+			AND paper_publish_time between #{paperStartTime} AND #{paperEndTime}
+		</if>
+		<if test="appStartTime != null and appStartTime != '' and appEndTime != null and appEndTime != ''">
+			AND app_publish_time between #{appStartTime} AND #{appEndTime}
+		</if>
+		<if test="page != null and page != ''">
+			AND page = #{page}
 		</if>
 		<if test="category != null and category != ''">
 			AND category = #{category}
+		</if>
+		<if test="articleType != null and articleType != ''">
+			AND article_type like CONCAT('%', '${articleType}', '%')
+		</if>
+		<if test="paperTitle != null and paperTitle != ''">
+			AND paper_title like CONCAT('%', '${paperTitle}', '%')
 		</if>
 		<if test="appTitle != null and appTitle != ''">
 			AND app_title like CONCAT('%', '${appTitle}', '%')
@@ -60,11 +68,14 @@
 		<if test="author != null and author != ''">
 			AND author like CONCAT('%', '${author}', '%')
 		</if>
-		<if test="articleType != null and articleType != ''">
-			AND article_type = #{articleType}
-		</if>
 		<if test="editor != null and editor != ''">
 			AND editor like CONCAT('%', '${editor}', '%')
+		</if>
+		<if test="wordCountStart != null and wordCountStart != '' and wordCountEnd != null and wordCountEnd != ''">
+			AND word_count between #{wordCountStart} AND #{wordCountEnd}
+		</if>
+		<if test="clickCountStart != null and clickCountStart != '' and clickCountEnd != null and clickCountEnd != ''">
+			AND click_count between #{clickCountStart} AND #{clickCountEnd}
 		</if>
 		<if test="level != null and level != ''">
 			AND level = #{level}
@@ -82,62 +93,83 @@
 		</where>
 	</select>
 	
-	<insert id="addApp" parameterType="com.foshanplus.mediaperformance.bean.Article">
-		INSERT INTO t_app(app_publish_time, category, app_title, author, article_type, editor, word_count, click_count
-			, url, level, score, create_user, create_time, update_user, update_time)
-		values(#{appPublishTime}, #{category}, #{appTitle}, #{author}, #{articleType}, #{editor}, #{wordCount}, #{clickCount}
-			, #{url}, #{level}, #{score}, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
+		INSERT INTO t_article(
+			  type, news_source_id, paper_publish_time, app_publish_time
+			, page, category, article_type, paper_title
+			, app_title, author, editor, word_count
+			, click_count, url, level, score
+			, create_user, create_time, update_user, update_time
+		)
+		values(
+			  #{type}, #{newsSourceId}, #{paperPublishTime}, #{appPublishTime}
+			, #{page}, #{category}, #{articleType}, #{paperTitle}
+			, #{appTitle}, #{author}, #{editor}, #{wordCount}
+			, #{clickCount}, #{url}, #{level}, #{score}
+			, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
 		)
 	</insert>
 	
-	<update id="updateApp" parameterType="com.foshanplus.mediaperformance.bean.Article">
-		update t_app
+	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.Article">
+		update t_article
 		<set>
+			<if test="type != null">
+				type = #{type, jdbcType = TINYINT}
+			</if>
+			<if test="paperPublishTime != null">
+				paper_publish_time = #{paperPublishTime, jdbcType = DATE},
+			</if>
 			<if test="appPublishTime != null">
-				app_publish_time = #{appPublishTime,jdbcType=VARCHAR},
+				app_publish_time = #{appPublishTime, jdbcType = DATETIME},
+			</if>
+			<if test="page != null">
+				page = #{page, jdbcType = VARCHAR},
 			</if>
 			<if test="category != null">
-				category = #{category,jdbcType=VARCHAR},
-			</if>
-			<if test="appTitle != null">
-				app_title = #{appTitle,jdbcType=VARCHAR},
-			</if>
-			<if test="author != null">
-				author = #{author,jdbcType=VARCHAR},
+				category = #{category, jdbcType = VARCHAR},
 			</if>
 			<if test="articleType != null">
-				article_type = #{articleType,jdbcType=VARCHAR},
+				article_type = #{articleType, jdbcType = VARCHAR},
+			</if>
+			<if test="paperTitle != null">
+				paper_title = #{paperTitle, jdbcType = VARCHAR},
+			</if>
+			<if test="appTitle != null">
+				app_title = #{appTitle, jdbcType = VARCHAR},
+			</if>
+			<if test="author != null">
+				author = #{author, jdbcType = VARCHAR},
 			</if>
 			<if test="editor != null">
-				editor = #{editor,jdbcType=VARCHAR},
+				editor = #{editor, jdbcType = VARCHAR},
 			</if>
 			<if test="wordCount != null">
-				wordCount = #{wordCount,jdbcType=INT},
+				wordCount = #{wordCount, jdbcType = INT},
 			</if>
 			<if test="clickCount != null">
-				clickCount = #{clickCount,jdbcType=INT},
+				clickCount = #{clickCount, jdbcType = INT},
 			</if>
 			<if test="url != null">
-				url = #{url,jdbcType=VARCHAR},
+				url = #{url, jdbcType = VARCHAR},
 			</if>
 			<if test="level != null">
-				level = #{level,jdbcType=VARCHAR},
+				level = #{level, jdbcType = VARCHAR},
 			</if>
 			<if test="score != null">
-				score = #{score,jdbcType=INT},
+				score = #{score, jdbcType = INT},
 			</if>
 			<if test="updateUser != null">
-				updateUser = #{updateUser,jdbcType=VARCHAR},
+				updateUser = #{updateUser, jdbcType = VARCHAR},
 			</if>
 			<if test="updateTime != null">
-				updateTime = #{updateTime,jdbcType=VARCHAR},
+				updateTime = #{updateTime, jdbcType = VARCHAR},
 			</if>
 		</set>
 		where id = #{id}
 	</update>
 	
-	<delete id="deleteApp" parameterType="java.lang.Long">
-		DELETE FROM t_app WHERE id = #{id}
+	<delete id="delete" parameterType="java.lang.Long">
+		DELETE FROM t_article WHERE id = #{id}
 	</delete>
 	
 </mapper>

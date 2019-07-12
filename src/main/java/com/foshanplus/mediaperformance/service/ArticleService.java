@@ -23,8 +23,8 @@ public class ArticleService {
 	@Autowired
 	private ArticleMapper articleMapper;
 	
-	public Result<List<Article>> findApp(Map<String, Object> params) {
-		Page<Article> articles = articleMapper.findApp(params);
+	public Result<List<Article>> find(Map<String, Object> params) {
+		Page<Article> articles = articleMapper.find(params);
 		return new Result<List<Article>>(articles, articles.getPageNum(), articles.getPageSize(), articles.getTotal(), articles.getPages());
 	}
 	

@@ -12,23 +12,27 @@ public class Article {
 	
 	private Long id;
 	
+	private Integer type;
+	
+	private Long newsSourceId;
+	
 	private Date paperPublishTime;
+	
+	private Date appPublishTime;
 	
 	private String page;
 	
 	private String category;
 	
-	private String paperTitle;
-	
-	private String author;
-	
 	private String articleType;
 	
-	private String editor;
+	private String paperTitle;
 	
 	private String appTitle;
 	
-	private Date appPublishTime;
+	private String author;
+	
+	private String editor;
 	
 	private String wordCount;
 	
@@ -56,12 +60,36 @@ public class Article {
 		this.id = id;
 	}
 
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+	public Long getNewsSourceId() {
+		return newsSourceId;
+	}
+
+	public void setNewsSourceId(Long newsSourceId) {
+		this.newsSourceId = newsSourceId;
+	}
+
 	public Date getPaperPublishTime() {
 		return paperPublishTime;
 	}
 
 	public void setPaperPublishTime(Date paperPublishTime) {
 		this.paperPublishTime = paperPublishTime;
+	}
+
+	public Date getAppPublishTime() {
+		return appPublishTime;
+	}
+
+	public void setAppPublishTime(Date appPublishTime) {
+		this.appPublishTime = appPublishTime;
 	}
 
 	public String getPage() {
@@ -80,22 +108,6 @@ public class Article {
 		this.category = category;
 	}
 
-	public String getPaperTitle() {
-		return paperTitle;
-	}
-
-	public void setPaperTitle(String paperTitle) {
-		this.paperTitle = paperTitle;
-	}
-
-	public String getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-
 	public String getArticleType() {
 		return articleType;
 	}
@@ -104,12 +116,12 @@ public class Article {
 		this.articleType = articleType;
 	}
 
-	public String getEditor() {
-		return editor;
+	public String getPaperTitle() {
+		return paperTitle;
 	}
 
-	public void setEditor(String editor) {
-		this.editor = editor;
+	public void setPaperTitle(String paperTitle) {
+		this.paperTitle = paperTitle;
 	}
 
 	public String getAppTitle() {
@@ -120,12 +132,20 @@ public class Article {
 		this.appTitle = appTitle;
 	}
 
-	public Date getAppPublishTime() {
-		return appPublishTime;
+	public String getAuthor() {
+		return author;
 	}
 
-	public void setAppPublishTime(Date appPublishTime) {
-		this.appPublishTime = appPublishTime;
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getEditor() {
+		return editor;
+	}
+
+	public void setEditor(String editor) {
+		this.editor = editor;
 	}
 
 	public String getWordCount() {

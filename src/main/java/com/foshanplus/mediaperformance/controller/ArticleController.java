@@ -29,8 +29,8 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	
-	@PostMapping("/app")
-	public Result<List<Article>> findApp(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
-		return articleService.findApp(params);
+	@PostMapping("/find")
+	public Result<List<Article>> find(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+		return articleService.find(params);
 	}
 }
