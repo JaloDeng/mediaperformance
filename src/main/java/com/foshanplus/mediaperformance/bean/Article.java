@@ -2,6 +2,8 @@ package com.foshanplus.mediaperformance.bean;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * @author Jalo Deng
  * @email 651379728@qq.com
@@ -16,6 +18,7 @@ public class Article {
 	
 	private Long newsSourceId;
 	
+	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date paperPublishTime;
 	
 	private Date appPublishTime;
