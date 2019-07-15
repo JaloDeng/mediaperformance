@@ -7,39 +7,39 @@
 	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
 		<result column="id" property="id"/>
 		<result column="type" property="type"/>
-		<result column="paper_publish_time" property="paperPublishTime"/>
-		<result column="app_publish_time" property="appPublishTime"/>
+		<result column="paperPublishTime" property="paperPublishTime"/>
+		<result column="appPublishTime" property="appPublishTime"/>
 		<result column="page" property="page"/>
 		<result column="category" property="category"/>
-		<result column="article_type" property="articleType"/>
-		<result column="paper_title" property="paperTitle"/>
-		<result column="app_title" property="appTitle"/>
+		<result column="articleType" property="articleType"/>
+		<result column="paperTitle" property="paperTitle"/>
+		<result column="appTitle" property="appTitle"/>
 		<result column="author" property="author"/>
 		<result column="editor" property="editor"/>
-		<result column="word_count" property="wordCount"/>
-		<result column="click_count" property="clickCount"/>
+		<result column="wordCount" property="wordCount"/>
+		<result column="clickCount" property="clickCount"/>
 		<result column="url" property="url"/>
 		<result column="level" property="level"/>
 		<result column="score" property="score"/>
-		<result column="create_user" property="createUser"/>
-		<result column="create_time" property="createTime"/>
-		<result column="update_user" property="updateUser"/>
-		<result column="update_time" property="updateTime"/>
+		<result column="createUser" property="createUser"/>
+		<result column="createTime" property="createTime"/>
+		<result column="updateUser" property="updateUser"/>
+		<result column="updateTime" property="updateTime"/>
 	</resultMap>
 	
 	<!-- sys_user table all fields -->
 	<sql id="Article_List" >
-		id, type, paper_publish_time, app_publish_time, page, category, article_type, paper_title, app_title, author, editor,
-		word_count, click_count, url, level, score, create_user, create_time, update_user, update_time
+		id, type, paperPublishTime, appPublishTime, page, category, articleType, paperTitle, appTitle, author, editor,
+		wordCount, clickCount, url, level, score, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		INSERT INTO t_article(
-			  type, news_source_id, paper_publish_time, app_publish_time
-			, page, category, article_type, paper_title
-			, app_title, author, editor, word_count
-			, click_count, url, level, score
-			, create_user, create_time, update_user, update_time
+			  type, newsSourceId, paperPublishTime, appPublishTime
+			, page, category, articleType, paperTitle
+			, appTitle, author, editor, wordCount
+			, clickCount, url, level, score
+			, createUser, createTime, updateUser, updateTime
 		)
 		values(
 			  #{type}, #{newsSourceId}, #{paperPublishTime}, #{appPublishTime}
@@ -62,16 +62,16 @@
 			AND type = #{type}
 		</if>
 		<if test="paperStartTime != null and paperStartTime != '' and paperEndTime != null and paperEndTime != ''">
-			AND paper_publish_time between #{paperStartTime} AND #{paperEndTime}
+			AND paperPublishTime between #{paperStartTime} AND #{paperEndTime}
 		</if>
 		<if test="appStartTime != null and appStartTime != '' and appEndTime != null and appEndTime != ''">
-			AND app_publish_time between #{appStartTime} AND #{appEndTime}
+			AND appPublishTime between #{appStartTime} AND #{appEndTime}
 		</if>
 		<if test="paperTitle != null and paperTitle != ''">
-			AND paper_title like CONCAT('%', '${paperTitle}', '%')
+			AND paperTitle like CONCAT('%', '${paperTitle}', '%')
 		</if>
 		<if test="appTitle != null and appTitle != ''">
-			AND app_title like CONCAT('%', '${appTitle}', '%')
+			AND appTitle like CONCAT('%', '${appTitle}', '%')
 		</if>
 		<if test="author != null and author != ''">
 			AND author like CONCAT('%', '${author}', '%')
@@ -103,10 +103,10 @@
 				type = #{type, jdbcType = TINYINT},
 			</if>
 			<if test="paperPublishTime != null">
-				paper_publish_time = #{paperPublishTime, jdbcType = DATE},
+				paperPublishTime = #{paperPublishTime, jdbcType = DATE},
 			</if>
 			<if test="appPublishTime != null">
-				app_publish_time = #{appPublishTime, jdbcType = TIMESTAMP},
+				appPublishTime = #{appPublishTime, jdbcType = TIMESTAMP},
 			</if>
 			<if test="page != null">
 				page = #{page, jdbcType = VARCHAR},
@@ -115,13 +115,13 @@
 				category = #{category, jdbcType = VARCHAR},
 			</if>
 			<if test="articleType != null">
-				article_type = #{articleType, jdbcType = VARCHAR},
+				articleType = #{articleType, jdbcType = VARCHAR},
 			</if>
 			<if test="paperTitle != null">
-				paper_title = #{paperTitle, jdbcType = VARCHAR},
+				paperTitle = #{paperTitle, jdbcType = VARCHAR},
 			</if>
 			<if test="appTitle != null">
-				app_title = #{appTitle, jdbcType = VARCHAR},
+				appTitle = #{appTitle, jdbcType = VARCHAR},
 			</if>
 			<if test="author != null">
 				author = #{author, jdbcType = VARCHAR},
@@ -130,10 +130,10 @@
 				editor = #{editor, jdbcType = VARCHAR},
 			</if>
 			<if test="wordCount != null">
-				word_count = #{wordCount, jdbcType = INTEGER},
+				wordCount = #{wordCount, jdbcType = INTEGER},
 			</if>
 			<if test="clickCount != null">
-				click_count = #{clickCount, jdbcType = INTEGER},
+				clickCount = #{clickCount, jdbcType = INTEGER},
 			</if>
 			<if test="url != null">
 				url = #{url, jdbcType = VARCHAR},
@@ -145,7 +145,7 @@
 				score = #{score, jdbcType = INTEGER},
 			</if>
 			<if test="updateUser != null">
-				updateUser = #{updateUser, jdbcType = TIMESTAMP},
+				updateUser = #{updateUser, jdbcType = VARCHAR},
 			</if>
 			<if test="updateTime != null">
 				updateTime = #{updateTime, jdbcType = TIMESTAMP},
