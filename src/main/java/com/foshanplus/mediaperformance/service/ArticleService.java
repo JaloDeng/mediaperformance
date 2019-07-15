@@ -1,7 +1,6 @@
 package com.foshanplus.mediaperformance.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,13 +45,15 @@ public class ArticleService {
 		}
 	}
 	
-	public Result<List<Article>> find(Map<String, Object> params) {
-		Page<Article> articles = articleMapper.find(params);
+	public Result<List<Article>> findAll(Integer type, String paperStartTime, String paperEndTime, String appStartTime,
+			String appEndTime, String paperTitle, String appTitle, String author, String editor, Integer isScore,
+			Integer pageNum, Integer pageSize, String orderBy) {
+		Page<Article> articles = articleMapper.findAll(type, paperStartTime, paperEndTime, appStartTime, appEndTime, 
+				paperTitle, appTitle, author, editor, isScore, pageNum, pageSize, orderBy);
 		return new Result<List<Article>>(articles, articles.getPageNum(), articles.getPageSize(), articles.getTotal(), articles.getPages());
 	}
 
 	public Result<Article> findById(Long id) {
 		return new Result<Article>(articleMapper.findById(id), null, null, null, null);
 	}
-
 }

@@ -54,11 +54,11 @@
 		DELETE FROM t_article WHERE id = #{id}
 	</delete>
 	
-	<select id="find" parameterType="Object" resultMap="BaseResultMap">
+	<select id="findAll" resultMap="BaseResultMap">
 		SELECT <include refid="Article_List" />
 		FROM t_article
 		<where>
-		<if test="type != null and type != ''">
+		<if test="type != null">
 			AND type = #{type}
 		</if>
 		<if test="paperStartTime != null and paperStartTime != '' and paperEndTime != null and paperEndTime != ''">
@@ -66,15 +66,6 @@
 		</if>
 		<if test="appStartTime != null and appStartTime != '' and appEndTime != null and appEndTime != ''">
 			AND app_publish_time between #{appStartTime} AND #{appEndTime}
-		</if>
-		<if test="page != null and page != ''">
-			AND page = #{page}
-		</if>
-		<if test="category != null and category != ''">
-			AND category = #{category}
-		</if>
-		<if test="articleType != null and articleType != ''">
-			AND article_type like CONCAT('%', '${articleType}', '%')
 		</if>
 		<if test="paperTitle != null and paperTitle != ''">
 			AND paper_title like CONCAT('%', '${paperTitle}', '%')
@@ -87,15 +78,6 @@
 		</if>
 		<if test="editor != null and editor != ''">
 			AND editor like CONCAT('%', '${editor}', '%')
-		</if>
-		<if test="wordCountStart != null and wordCountStart != '' and wordCountEnd != null and wordCountEnd != ''">
-			AND word_count between #{wordCountStart} AND #{wordCountEnd}
-		</if>
-		<if test="clickCountStart != null and clickCountStart != '' and clickCountEnd != null and clickCountEnd != ''">
-			AND click_count between #{clickCountStart} AND #{clickCountEnd}
-		</if>
-		<if test="level != null and level != ''">
-			AND level = #{level}
 		</if>
 		<if test="isScore != null and isScore != '' ">
 		<choose>

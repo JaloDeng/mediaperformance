@@ -1,6 +1,6 @@
 package com.foshanplus.mediaperformance.mapper;
 
-import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 
 import com.foshanplus.mediaperformance.bean.Article;
 import com.github.pagehelper.Page;
@@ -17,8 +17,14 @@ public interface ArticleMapper {
 	
 	public void delete(Long id);
 
-	public Page<Article> find(Map<String, Object> params);
-
+	public Page<Article> findAll(@Param("type") Integer type,
+			@Param("paperStartTime") String paperStartTime, @Param("paperEndTime") String paperEndTime,
+			@Param("appStartTime") String appStartTime, @Param("appEndTime") String appEndTime,
+			@Param("paperTitle") String paperTitle, @Param("appTitle") String appTitle,
+			@Param("author") String author, @Param("editor") String editor, 
+			@Param("isScore") Integer isScore, @Param("pageNum") Integer pageNum, 
+			@Param("pageSize") Integer pageSize, @Param("orderBy") String orderBy);
+	
 	public Article findById(Long id);
 
 	public void update(Article article);

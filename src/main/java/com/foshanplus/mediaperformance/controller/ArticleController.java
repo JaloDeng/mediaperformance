@@ -1,7 +1,6 @@
 package com.foshanplus.mediaperformance.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foshanplus.mediaperformance.bean.Article;
@@ -33,7 +32,7 @@ public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
 	
-	@PutMapping("/")
+	@PutMapping("")
 	public Result<Article> save(@RequestBody Article article, HttpServletRequest request, HttpServletResponse response) {
 		return articleService.save(article);
 	}
@@ -43,9 +42,17 @@ public class ArticleController {
 		return articleService.delete(id);
 	}
 	
-	@PostMapping("/find")
-	public Result<List<Article>> find(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
-		return articleService.find(params);
+	@GetMapping("")
+	public Result<List<Article>> findAll(@RequestParam(required = false) Integer type, 
+			@RequestParam(required = false) String paperStartTime, @RequestParam(required = false) String paperEndTime,
+			@RequestParam(required = false) String appStartTime, @RequestParam(required = false) String appEndTime,
+			@RequestParam(required = false) String paperTitle, @RequestParam(required = false) String appTitle,
+			@RequestParam(required = false) String author, @RequestParam(required = false) String editor,
+			@RequestParam(required = false) Integer isScore, @RequestParam(required = false, defaultValue = "1") Integer pageNum,
+			@RequestParam(required = false, defaultValue = "100") Integer pageSize, @RequestParam(required = false) String orderBy,
+			HttpServletRequest request, HttpServletResponse response) {
+		return articleService.findAll(type, paperStartTime, paperEndTime, appStartTime, appEndTime, 
+				paperTitle, appTitle, author, editor, isScore, pageNum, pageSize, orderBy);
 	}
 	
 	@GetMapping("/{id}")
