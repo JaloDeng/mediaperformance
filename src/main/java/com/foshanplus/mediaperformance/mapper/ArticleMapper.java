@@ -13,6 +13,14 @@ import com.github.pagehelper.Page;
 
 public interface ArticleMapper {
 
-	public Page<Article> find(Map<String, Object> params);
+	public Integer add(Article article);
 	
+	public void delete(Long id);
+
+	public Page<Article> find(Map<String, Object> params);
+
+	public Article findById(Long id);
+
+	public void update(Article article);
+
 }
