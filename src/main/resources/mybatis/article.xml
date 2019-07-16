@@ -9,7 +9,7 @@
 		<result column="type" property="type"/>
 		<result column="paperPublishTime" property="paperPublishTime"/>
 		<result column="appPublishTime" property="appPublishTime"/>
-		<result column="page" property="page"/>
+		<result column="pageName" property="pageName"/>
 		<result column="category" property="category"/>
 		<result column="articleType" property="articleType"/>
 		<result column="paperTitle" property="paperTitle"/>
@@ -29,21 +29,21 @@
 	
 	<!-- sys_user table all fields -->
 	<sql id="Article_List" >
-		id, type, paperPublishTime, appPublishTime, page, category, articleType, paperTitle, appTitle, author, editor,
+		id, type, paperPublishTime, appPublishTime, pageName, category, articleType, paperTitle, appTitle, author, editor,
 		wordCount, clickCount, url, level, score, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		INSERT INTO t_article(
 			  type, newsSourceId, paperPublishTime, appPublishTime
-			, page, category, articleType, paperTitle
+			, pageName, category, articleType, paperTitle
 			, appTitle, author, editor, wordCount
 			, clickCount, url, level, score
 			, createUser, createTime, updateUser, updateTime
 		)
 		values(
 			  #{type}, #{newsSourceId}, #{paperPublishTime}, #{appPublishTime}
-			, #{page}, #{category}, #{articleType}, #{paperTitle}
+			, #{pageName}, #{category}, #{articleType}, #{paperTitle}
 			, #{appTitle}, #{author}, #{editor}, #{wordCount}
 			, #{clickCount}, #{url}, #{level}, #{score}
 			, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
@@ -108,8 +108,8 @@
 			<if test="appPublishTime != null">
 				appPublishTime = #{appPublishTime, jdbcType = TIMESTAMP},
 			</if>
-			<if test="page != null">
-				page = #{page, jdbcType = VARCHAR},
+			<if test="pageName != null">
+				pageName = #{pageName, jdbcType = VARCHAR},
 			</if>
 			<if test="category != null">
 				category = #{category, jdbcType = VARCHAR},

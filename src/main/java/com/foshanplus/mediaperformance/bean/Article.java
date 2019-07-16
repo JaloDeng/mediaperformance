@@ -23,7 +23,7 @@ public class Article {
 	
 	private Date appPublishTime;
 	
-	private String page;
+	private String pageName;
 	
 	private String category;
 	
@@ -95,12 +95,12 @@ public class Article {
 		this.appPublishTime = appPublishTime;
 	}
 
-	public String getPage() {
-		return page;
+	public String getPageName() {
+		return pageName;
 	}
 
-	public void setPage(String page) {
-		this.page = page;
+	public void setPageName(String pageName) {
+		this.pageName = pageName;
 	}
 
 	public String getCategory() {
