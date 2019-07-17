@@ -97,7 +97,7 @@
 		</if>
 		<if test="isScore != null and isScore != '' ">
 		<choose>
-			<when test="isScore = '1'">
+			<when test="isScore == 1">
 				AND NOT ISNULL(asr.id)
 			</when>
 			<otherwise>

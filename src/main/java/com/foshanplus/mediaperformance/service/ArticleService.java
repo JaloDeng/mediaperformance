@@ -80,7 +80,7 @@ public class ArticleService {
 			ArticleScoreRecord articleScoreRecord = new ArticleScoreRecord();
 			articleScoreRecord.setArticleId(article.getId());
 			articleScoreRecord.setNewsSourceId(article.getNewsSourceId());
-			articleScoreRecord.setNewsTransferId(articleScoreRecord.getNewsTransferId());
+			articleScoreRecord.setNewsTransferId(article.getNewsTransferId());
 			articleScoreRecord.setScoreId(article.getScoreId());
 			articleScoreRecord.setCreateUser("SYSTEM");
 			articleScoreRecord.setUpdateUser("SYSTEM");
