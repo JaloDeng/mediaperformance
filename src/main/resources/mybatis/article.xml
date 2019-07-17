@@ -7,19 +7,20 @@
 	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
 		<result column="id" property="id"/>
 		<result column="type" property="type"/>
+		<result column="newsType" property="newsType"/>
+		<result column="newsSourceId" property="newsSourceId"/>
+		<result column="newsTransferId" property="newsTransferId"/>
 		<result column="paperPublishTime" property="paperPublishTime"/>
 		<result column="appPublishTime" property="appPublishTime"/>
 		<result column="pageName" property="pageName"/>
 		<result column="category" property="category"/>
-		<result column="articleType" property="articleType"/>
 		<result column="paperTitle" property="paperTitle"/>
 		<result column="appTitle" property="appTitle"/>
 		<result column="author" property="author"/>
 		<result column="editor" property="editor"/>
 		<result column="wordCount" property="wordCount"/>
-		<result column="clickCount" property="clickCount"/>
 		<result column="url" property="url"/>
-		<result column="level" property="level"/>
+		<result column="scoreId" property="scoreId"/>
 		<result column="score" property="score"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
@@ -27,25 +28,23 @@
 		<result column="updateTime" property="updateTime"/>
 	</resultMap>
 	
-	<!-- sys_user table all fields -->
 	<sql id="Article_List" >
-		id, type, paperPublishTime, appPublishTime, pageName, category, articleType, paperTitle, appTitle, author, editor,
-		wordCount, clickCount, url, level, score, createUser, createTime, updateUser, updateTime
+		id, type, newsType, newsSourceId, newsTransferId, paperPublishTime, appPublishTime, pageName, category, 
+		paperTitle, appTitle, author, editor, wordCount, url, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		INSERT INTO t_article(
-			  type, newsSourceId, paperPublishTime, appPublishTime
-			, pageName, category, articleType, paperTitle
-			, appTitle, author, editor, wordCount
-			, clickCount, url, level, score
+			  type, newsType, newsSourceId, newsTransferId
+			, paperPublishTime, appPublishTime, pageName, category
+			, paperTitle, appTitle, author, editor, wordCount, url
 			, createUser, createTime, updateUser, updateTime
 		)
 		values(
-			  #{type}, #{newsSourceId}, #{paperPublishTime}, #{appPublishTime}
-			, #{pageName}, #{category}, #{articleType}, #{paperTitle}
+			  #{type}, #{newsType}, #{newsSourceId}, #{newsTransferId}
+			, #{paperPublishTime}, #{appPublishTime}, #{pageName}, #{category}
 			, #{appTitle}, #{author}, #{editor}, #{wordCount}
-			, #{clickCount}, #{url}, #{level}, #{score}
+			, #{paperTitle}, #{appTitle}, #{author}, #{editor}, #{wordCount}, #{url}
 			, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
 		)
 	</insert>
@@ -55,45 +54,85 @@
 	</delete>
 	
 	<select id="findAll" resultMap="BaseResultMap">
-		SELECT <include refid="Article_List" />
-		FROM t_article
+		SELECT 
+			a.id
+			,a.type
+			,a.newsType
+			,a.newsSourceId
+			,a.newsTransferId
+			,a.paperPublishTime
+			,a.appPublishTime
+			,a.pageName
+			,a.category
+			,a.paperTitle
+			,a.appTitle
+			,a.author
+			,a.editor
+			,a.wordCount
+			,a.url
+			,asr.scoreId
+			,score.score
+		FROM t_article a
+		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
+		LEFT JOIN t_article_score score ON score.id = asr.scoreId
 		<where>
 		<if test="type != null">
-			AND type = #{type}
+			AND a.type = #{type}
 		</if>
 		<if test="paperStartTime != null and paperStartTime != '' and paperEndTime != null and paperEndTime != ''">
-			AND paperPublishTime between #{paperStartTime} AND #{paperEndTime}
+			AND a.paperPublishTime between #{paperStartTime} AND #{paperEndTime}
 		</if>
 		<if test="appStartTime != null and appStartTime != '' and appEndTime != null and appEndTime != ''">
-			AND appPublishTime between #{appStartTime} AND #{appEndTime}
+			AND a.appPublishTime between #{appStartTime} AND #{appEndTime}
 		</if>
 		<if test="paperTitle != null and paperTitle != ''">
-			AND paperTitle like CONCAT('%', '${paperTitle}', '%')
+			AND a.paperTitle like CONCAT('%', '${paperTitle}', '%')
 		</if>
 		<if test="appTitle != null and appTitle != ''">
-			AND appTitle like CONCAT('%', '${appTitle}', '%')
+			AND a.appTitle like CONCAT('%', '${appTitle}', '%')
 		</if>
 		<if test="author != null and author != ''">
-			AND author like CONCAT('%', '${author}', '%')
-		</if>
-		<if test="editor != null and editor != ''">
-			AND editor like CONCAT('%', '${editor}', '%')
+			AND a.author like CONCAT('%', '${author}', '%')
 		</if>
 		<if test="isScore != null and isScore != '' ">
 		<choose>
 			<when test="isScore = '1'">
-				AND score != ''
+				AND NOT ISNULL(asr.id)
 			</when>
 			<otherwise>
-				AND score = ''
+				AND ISNULL(asr.id)
 			</otherwise>
 		</choose>
+		</if>
+		<if test="scoreId != null and scoreId != '' ">
+			AND asr.scoreId = #{scoreId}
 		</if>
 		</where>
 	</select>
 	
 	<select id="findById" resultMap="BaseResultMap">
-		select <include refid="Article_List" /> from t_article a where a.id = #{id}
+		SELECT 
+			a.id
+			,a.type
+			,a.newsType
+			,a.newsSourceId
+			,a.newsTransferId
+			,a.paperPublishTime
+			,a.appPublishTime
+			,a.pageName
+			,a.category
+			,a.paperTitle
+			,a.appTitle
+			,a.author
+			,a.editor
+			,a.wordCount
+			,a.url
+			,asr.scoreId
+			,score.score
+		FROM t_article a 
+		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
+		LEFT JOIN t_article_score score ON score.id = asr.scoreId
+		where a.id = #{id}
 	</select>
 	
 	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.Article">
@@ -101,6 +140,9 @@
 		<set>
 			<if test="type != null">
 				type = #{type, jdbcType = TINYINT},
+			</if>
+			<if test="newsType != null">
+				newsType = #{newsType, jdbcType = TINYINT},
 			</if>
 			<if test="paperPublishTime != null">
 				paperPublishTime = #{paperPublishTime, jdbcType = DATE},
@@ -113,9 +155,6 @@
 			</if>
 			<if test="category != null">
 				category = #{category, jdbcType = VARCHAR},
-			</if>
-			<if test="articleType != null">
-				articleType = #{articleType, jdbcType = VARCHAR},
 			</if>
 			<if test="paperTitle != null">
 				paperTitle = #{paperTitle, jdbcType = VARCHAR},
@@ -132,17 +171,8 @@
 			<if test="wordCount != null">
 				wordCount = #{wordCount, jdbcType = INTEGER},
 			</if>
-			<if test="clickCount != null">
-				clickCount = #{clickCount, jdbcType = INTEGER},
-			</if>
 			<if test="url != null">
 				url = #{url, jdbcType = VARCHAR},
-			</if>
-			<if test="level != null">
-				level = #{level, jdbcType = VARCHAR},
-			</if>
-			<if test="score != null">
-				score = #{score, jdbcType = INTEGER},
 			</if>
 			<if test="updateUser != null">
 				updateUser = #{updateUser, jdbcType = VARCHAR},

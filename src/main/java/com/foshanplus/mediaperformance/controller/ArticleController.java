@@ -48,11 +48,11 @@ public class ArticleController {
 			@RequestParam(required = false) String appStartTime, @RequestParam(required = false) String appEndTime,
 			@RequestParam(required = false) String paperTitle, @RequestParam(required = false) String appTitle,
 			@RequestParam(required = false) String author, @RequestParam(required = false) String editor,
-			@RequestParam(required = false) Integer isScore, @RequestParam(required = false, defaultValue = "1") Integer pageNum,
-			@RequestParam(required = false, defaultValue = "100") Integer pageSize, @RequestParam(required = false) String orderBy,
-			HttpServletRequest request, HttpServletResponse response) {
+			@RequestParam(required = false) Integer isScore, @RequestParam(required = false) Integer scoreId,
+			@RequestParam(required = false, defaultValue = "1") Integer pageNum, @RequestParam(required = false, defaultValue = "100") Integer pageSize, 
+			@RequestParam(required = false) String orderBy, HttpServletRequest request, HttpServletResponse response) {
 		return articleService.findAll(type, paperStartTime, paperEndTime, appStartTime, appEndTime, 
-				paperTitle, appTitle, author, editor, isScore, pageNum, pageSize, orderBy);
+				paperTitle, appTitle, author, editor, isScore, scoreId, pageNum, pageSize, orderBy);
 	}
 	
 	@GetMapping("/{id}")

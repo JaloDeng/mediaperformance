@@ -16,7 +16,11 @@ public class Article {
 	
 	private Integer type;
 	
+	private Integer newsType;
+	
 	private Long newsSourceId;
+	
+	private Long newsTransferId;
 	
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date paperPublishTime;
@@ -26,8 +30,6 @@ public class Article {
 	private String pageName;
 	
 	private String category;
-	
-	private String articleType;
 	
 	private String paperTitle;
 	
@@ -39,11 +41,9 @@ public class Article {
 	
 	private String wordCount;
 	
-	private String clickCount;
-	
 	private String url;
 	
-	private String level;
+	private String scoreId;
 	
 	private Integer score;
 	
@@ -71,12 +71,28 @@ public class Article {
 		this.type = type;
 	}
 
+	public Integer getNewsType() {
+		return newsType;
+	}
+
+	public void setNewsType(Integer newsType) {
+		this.newsType = newsType;
+	}
+
 	public Long getNewsSourceId() {
 		return newsSourceId;
 	}
 
 	public void setNewsSourceId(Long newsSourceId) {
 		this.newsSourceId = newsSourceId;
+	}
+
+	public Long getNewsTransferId() {
+		return newsTransferId;
+	}
+
+	public void setNewsTransferId(Long newsTransferId) {
+		this.newsTransferId = newsTransferId;
 	}
 
 	public Date getPaperPublishTime() {
@@ -109,14 +125,6 @@ public class Article {
 
 	public void setCategory(String category) {
 		this.category = category;
-	}
-
-	public String getArticleType() {
-		return articleType;
-	}
-
-	public void setArticleType(String articleType) {
-		this.articleType = articleType;
 	}
 
 	public String getPaperTitle() {
@@ -159,14 +167,6 @@ public class Article {
 		this.wordCount = wordCount;
 	}
 
-	public String getClickCount() {
-		return clickCount;
-	}
-
-	public void setClickCount(String clickCount) {
-		this.clickCount = clickCount;
-	}
-
 	public String getUrl() {
 		return url;
 	}
@@ -175,12 +175,12 @@ public class Article {
 		this.url = url;
 	}
 
-	public String getLevel() {
-		return level;
+	public String getScoreId() {
+		return scoreId;
 	}
 
-	public void setLevel(String level) {
-		this.level = level;
+	public void setScoreId(String scoreId) {
+		this.scoreId = scoreId;
 	}
 
 	public Integer getScore() {

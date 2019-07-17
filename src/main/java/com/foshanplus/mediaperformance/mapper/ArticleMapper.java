@@ -22,11 +22,11 @@ public interface ArticleMapper {
 			@Param("appStartTime") String appStartTime, @Param("appEndTime") String appEndTime,
 			@Param("paperTitle") String paperTitle, @Param("appTitle") String appTitle,
 			@Param("author") String author, @Param("editor") String editor, 
-			@Param("isScore") Integer isScore, @Param("pageNum") Integer pageNum, 
-			@Param("pageSize") Integer pageSize, @Param("orderBy") String orderBy);
+			@Param("isScore") Integer isScore, @Param("scoreId") Integer scoreId,
+			@Param("pageNum") Integer pageNum, @Param("pageSize") Integer pageSize, @Param("orderBy") String orderBy);
 	
 	public Article findById(Long id);
 
 	public void update(Article article);
-
+	
 }

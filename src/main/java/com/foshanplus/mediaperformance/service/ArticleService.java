@@ -47,9 +47,9 @@ public class ArticleService {
 	
 	public Result<List<Article>> findAll(Integer type, String paperStartTime, String paperEndTime, String appStartTime,
 			String appEndTime, String paperTitle, String appTitle, String author, String editor, Integer isScore,
-			Integer pageNum, Integer pageSize, String orderBy) {
+			Integer scoreId, Integer pageNum, Integer pageSize, String orderBy) {
 		Page<Article> articles = articleMapper.findAll(type, paperStartTime, paperEndTime, appStartTime, appEndTime, 
-				paperTitle, appTitle, author, editor, isScore, pageNum, pageSize, orderBy);
+				paperTitle, appTitle, author, editor, isScore, scoreId, pageNum, pageSize, orderBy);
 		return new Result<List<Article>>(articles, articles.getPageNum(), articles.getPageSize(), articles.getTotal(), articles.getPages());
 	}
 
