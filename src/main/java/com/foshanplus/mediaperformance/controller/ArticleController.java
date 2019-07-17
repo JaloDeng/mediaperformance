@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foshanplus.mediaperformance.bean.Article;
+import com.foshanplus.mediaperformance.bean.ArticleScore;
 import com.foshanplus.mediaperformance.result.Result;
 import com.foshanplus.mediaperformance.service.ArticleService;
 
@@ -60,4 +61,8 @@ public class ArticleController {
 		return articleService.findById(id);
 	}
 	
+	@GetMapping("/score")
+	public Result<List<ArticleScore>> findArticleScoreAll() {
+		return articleService.findArticleScoreAll();
+	}
 }

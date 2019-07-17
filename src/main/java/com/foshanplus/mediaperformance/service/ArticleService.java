@@ -4,9 +4,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.foshanplus.mediaperformance.bean.Article;
+import com.foshanplus.mediaperformance.bean.ArticleScore;
+import com.foshanplus.mediaperformance.bean.ArticleScoreRecord;
 import com.foshanplus.mediaperformance.mapper.ArticleMapper;
+import com.foshanplus.mediaperformance.mapper.ArticleScoreMapper;
+import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordMapper;
 import com.foshanplus.mediaperformance.result.Result;
 import com.github.pagehelper.Page;
 
@@ -17,18 +22,27 @@ import com.github.pagehelper.Page;
  */
 
 @Service
+@Transactional
 public class ArticleService {
 
 	@Autowired
 	private ArticleMapper articleMapper;
+	
+	@Autowired
+	private ArticleScoreMapper articleScoreMapper;
+	
+	@Autowired
+	private ArticleScoreRecordMapper articleScoreRecordMapper;
 
 	public Result<Article> save(Article article) {
 		try {
 			if (article.getId() != null) {
 				articleMapper.update(article);
+				addArticleScoreRecord(article);
 				return new Result<Article>("修改成功", true);
 			} else {
 				articleMapper.add(article);
+				addArticleScoreRecord(article);
 				return new Result<Article>("新增成功", true);
 			}
 		} catch (Exception e) {
@@ -55,5 +69,22 @@ public class ArticleService {
 
 	public Result<Article> findById(Long id) {
 		return new Result<Article>(articleMapper.findById(id), null, null, null, null);
+	}
+	
+	public Result<List<ArticleScore>> findArticleScoreAll() {
+		return new Result<List<ArticleScore>>(articleScoreMapper.findAll());
+	}
+	
+	private void addArticleScoreRecord(Article article) {
+		if (articleScoreRecordMapper.countByNewsTransferId(article.getId(), article.getNewsTransferId()) == 0) {
+			ArticleScoreRecord articleScoreRecord = new ArticleScoreRecord();
+			articleScoreRecord.setArticleId(article.getId());
+			articleScoreRecord.setNewsSourceId(article.getNewsSourceId());
+			articleScoreRecord.setNewsTransferId(articleScoreRecord.getNewsTransferId());
+			articleScoreRecord.setScoreId(article.getScoreId());
+			articleScoreRecord.setCreateUser("SYSTEM");
+			articleScoreRecord.setUpdateUser("SYSTEM");
+			articleScoreRecordMapper.add(articleScoreRecord);
+		}
 	}
 }

@@ -27,6 +27,15 @@ public class Result<T> {
 	/**
 	 * 结果集
 	 * @param data 数据
+	 */
+	public Result(T data) {
+		this.data = data;
+		this.success = true;
+	}
+	
+	/**
+	 * 结果集
+	 * @param data 数据
 	 * @param pageNum 当前页
 	 * @param pageSize 当前页的数据量
 	 * @param total 总数据量

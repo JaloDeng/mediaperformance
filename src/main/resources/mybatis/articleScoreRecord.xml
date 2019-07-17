@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.foshanplus.mediaperformance.mapper.ArticleScoreRecordMapper" >
+
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.ArticleScoreRecord" >
+		<result column="id" property="id"/>
+		<result column="articleId" property="articleId"/>
+		<result column="newsSourceId" property="newsSourceId"/>
+		<result column="newsTransferId" property="newsTransferId"/>
+		<result column="scoreId" property="scoreId"/>
+		<result column="createUser" property="createUser"/>
+		<result column="createTime" property="createTime"/>
+		<result column="updateUser" property="updateUser"/>
+		<result column="updateTime" property="updateTime"/>
+	</resultMap>
+	
+	<sql id="Base_List" >
+		id, articleId, newsSourceId, newsTransferId, scoreId, createUser, createTime, updateUser, updateTime
+	</sql>
+	
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
+		INSERT INTO t_article_score_record(articleId, newsSourceId, newsTransferId, scoreId, createUser, updateUser)
+		values(#{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{createUser}, #{updateUser})
+	</insert>
+	
+	<select id="countByNewsTransferId" resultType="java.lang.Integer">
+		SELECT 
+			COUNT(1) 
+		FROM t_article_score_record asr 
+		WHERE asr.articleId = #{articleId}
+			OR asr.newsTransferId = #{newsTransferId} 
+	</select>
+	
+</mapper>

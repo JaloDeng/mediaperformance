@@ -25,6 +25,7 @@ CREATE TABLE `t_article` (
   `editor` varchar(200) DEFAULT NULL COMMENT '编辑',
   `wordCount` int(10) DEFAULT '0' COMMENT '字数',
   `url` varchar(500) DEFAULT NULL COMMENT '链接',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `createUser` varchar(100) DEFAULT NULL COMMENT '创建用户',
   `createTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `updateUser` varchar(100) DEFAULT NULL COMMENT '更新用户',
@@ -33,7 +34,7 @@ CREATE TABLE `t_article` (
   KEY `index_t_article_type` (`type`) USING BTREE COMMENT '文章类型索引',
   KEY `index_t_article_appTitle` (`appTitle`) USING BTREE COMMENT 'APP标题索引',
   KEY `index_t_article_appPublishTime` (`appPublishTime`) USING BTREE COMMENT 'APP发布时间索引'
-) ENGINE=InnoDB AUTO_INCREMENT=1093 DEFAULT CHARSET=utf8mb4 COMMENT='文章统计';
+) ENGINE=InnoDB AUTO_INCREMENT=2280 DEFAULT CHARSET=utf8mb4 COMMENT='文章统计';
 CREATE TABLE `t_article_click_count` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `title` varchar(500) DEFAULT NULL COMMENT 'APP标题',
@@ -57,8 +58,9 @@ CREATE TABLE `t_article_score_record` (
   `updateUser` varchar(100) DEFAULT NULL COMMENT '更新用户',
   `updateTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `index_t_article_score_articleId` (`articleId`) USING BTREE,
-  KEY `index_t_article_score_scoreId` (`scoreId`) USING BTREE
+  KEY `index_t_article_score_record_articleId` (`articleId`) USING BTREE,
+  KEY `index_t_article_score_record_scoreId` (`scoreId`) USING BTREE,
+  KEY `index_t_article_score_record_newsTransferId` (`newsTransferId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章评分记录表';
 BEGIN;
 LOCK TABLES `media_performance`.`t_article` WRITE;
@@ -67,7 +69,7 @@ UNLOCK TABLES;
 COMMIT;
 BEGIN;
 LOCK TABLES `media_performance`.`t_article_click_count` WRITE;
-DELETE FROM `media_performance`.`t_article_click_count`;
+DELETE FROM `media_performance`.`t_article_click_count`; 
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
