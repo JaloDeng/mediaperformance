@@ -43,6 +43,8 @@ public class Article {
 	
 	private String url;
 	
+	private String remark;
+	
 	private String scoreId;
 	
 	private Integer score;
@@ -173,6 +175,14 @@ public class Article {
 
 	public void setUrl(String url) {
 		this.url = url;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public String getScoreId() {

@@ -20,6 +20,7 @@
 		<result column="editor" property="editor"/>
 		<result column="wordCount" property="wordCount"/>
 		<result column="url" property="url"/>
+		<result column="remark" property="remark"/>
 		<result column="scoreId" property="scoreId"/>
 		<result column="score" property="score"/>
 		<result column="createUser" property="createUser"/>
@@ -30,21 +31,21 @@
 	
 	<sql id="Article_List" >
 		id, type, newsType, newsSourceId, newsTransferId, paperPublishTime, appPublishTime, pageName, category, 
-		paperTitle, appTitle, author, editor, wordCount, url, createUser, createTime, updateUser, updateTime
+		paperTitle, appTitle, author, editor, wordCount, url, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		INSERT INTO t_article(
 			  type, newsType, newsSourceId, newsTransferId
 			, paperPublishTime, appPublishTime, pageName, category
-			, paperTitle, appTitle, author, editor, wordCount, url
+			, paperTitle, appTitle, author, editor, wordCount, url, remark
 			, createUser, createTime, updateUser, updateTime
 		)
 		values(
 			  #{type}, #{newsType}, #{newsSourceId}, #{newsTransferId}
 			, #{paperPublishTime}, #{appPublishTime}, #{pageName}, #{category}
 			, #{appTitle}, #{author}, #{editor}, #{wordCount}
-			, #{paperTitle}, #{appTitle}, #{author}, #{editor}, #{wordCount}, #{url}
+			, #{paperTitle}, #{appTitle}, #{author}, #{editor}, #{wordCount}, #{url}, #{remark}
 			, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
 		)
 	</insert>
@@ -70,6 +71,7 @@
 			,a.editor
 			,a.wordCount
 			,a.url
+			,a.remark
 			,asr.scoreId
 			,score.score
 		FROM t_article a
@@ -127,6 +129,7 @@
 			,a.editor
 			,a.wordCount
 			,a.url
+			,a.remark
 			,asr.scoreId
 			,score.score
 		FROM t_article a 
@@ -173,6 +176,9 @@
 			</if>
 			<if test="url != null">
 				url = #{url, jdbcType = VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark, jdbcType = VARCHAR},
 			</if>
 			<if test="updateUser != null">
 				updateUser = #{updateUser, jdbcType = VARCHAR},
