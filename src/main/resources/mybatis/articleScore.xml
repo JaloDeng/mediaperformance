@@ -14,7 +14,7 @@
 	</sql>
 	
 	<select id="findAll" resultMap="BaseResultMap">
-		SELECT <include refid="Base_List" /> FROM t_article_score
+		SELECT <include refid="Base_List" /> FROM t_article_score ORDER BY score DESC
 	</select>
 	
 </mapper>
