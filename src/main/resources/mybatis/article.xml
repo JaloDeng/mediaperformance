@@ -72,7 +72,7 @@
 			,a.url
 			,asr.scoreId
 			,asr.remark
-			,score.score
+			,CASE score.id WHEN '手动打分' THEN NULL ELSE CONCAT(score.score, '') END AS score
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_score score ON score.id = asr.scoreId
@@ -130,7 +130,7 @@
 			,a.url
 			,asr.scoreId
 			,asr.remark
-			,score.score
+			,CASE score.id WHEN '手动打分' THEN NULL ELSE CONCAT(score.score, '') END AS score
 		FROM t_article a 
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_score score ON score.id = asr.scoreId

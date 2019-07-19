@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS `media_performance`.`t_article_score`;
 DROP TABLE IF EXISTS `media_performance`.`t_article_score_record`;
 CREATE TABLE `t_article` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `type` tinyint(4) DEFAULT NULL COMMENT '类型，1：只发APP、2：先发纸媒再发APP、3：先发APP再发纸媒、4：只发报纸',
+  `type` tinyint(4) DEFAULT NULL COMMENT '类型，1：只发APP、2：先发APP再发纸媒、3：先发纸媒再发APP、4：只发报纸',
   `newsType` tinyint(4) DEFAULT NULL COMMENT '文章类型，1：文字稿、2：图片稿，3：音频稿',
   `newsSourceId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newssource.id、newssourceid',
   `newsTransferId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id',
@@ -75,7 +75,7 @@ COMMIT;
 BEGIN;
 LOCK TABLES `media_performance`.`t_article_score` WRITE;
 DELETE FROM `media_performance`.`t_article_score`;
-INSERT INTO `media_performance`.`t_article_score` (`id`,`score`,`description`) VALUES ('A', 80, NULL),('A+', 100, NULL),('A-', 60, NULL),('B', 30, NULL),('B+', 40, NULL),('B-', 20, NULL),('C', 10, NULL),('C+', 15, NULL),('C-', 5, NULL);
+INSERT INTO `media_performance`.`t_article_score` (`id`,`score`,`description`) VALUES ('A', 80, NULL),('A+', 100, NULL),('A-', 60, NULL),('B', 30, NULL),('B+', 40, NULL),('B-', 20, NULL),('C', 10, NULL),('C+', 15, NULL),('C-', 5, NULL),('手动打分', 0, NULL);
 UNLOCK TABLES;
 COMMIT;
 BEGIN;
