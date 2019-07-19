@@ -76,15 +76,18 @@ public class ArticleService {
 	}
 	
 	private void addArticleScoreRecord(Article article) {
+		ArticleScoreRecord articleScoreRecord = new ArticleScoreRecord();
+		articleScoreRecord.setArticleId(article.getId());
+		articleScoreRecord.setNewsSourceId(article.getNewsSourceId());
+		articleScoreRecord.setNewsTransferId(article.getNewsTransferId());
+		articleScoreRecord.setScoreId(article.getScoreId());
+		articleScoreRecord.setRemark(article.getRemark());
+		articleScoreRecord.setCreateUser("SYSTEM");
+		articleScoreRecord.setUpdateUser("SYSTEM");
 		if (articleScoreRecordMapper.countByNewsTransferId(article.getId(), article.getNewsTransferId()) == 0) {
-			ArticleScoreRecord articleScoreRecord = new ArticleScoreRecord();
-			articleScoreRecord.setArticleId(article.getId());
-			articleScoreRecord.setNewsSourceId(article.getNewsSourceId());
-			articleScoreRecord.setNewsTransferId(article.getNewsTransferId());
-			articleScoreRecord.setScoreId(article.getScoreId());
-			articleScoreRecord.setCreateUser("SYSTEM");
-			articleScoreRecord.setUpdateUser("SYSTEM");
 			articleScoreRecordMapper.add(articleScoreRecord);
+		} else {
+			articleScoreRecordMapper.update(articleScoreRecord);
 		}
 	}
 }

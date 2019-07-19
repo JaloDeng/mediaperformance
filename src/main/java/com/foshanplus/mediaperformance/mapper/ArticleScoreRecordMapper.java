@@ -14,6 +14,8 @@ public interface ArticleScoreRecordMapper {
 
 	public Integer add(ArticleScoreRecord articleScoreRecord);
 	
+	public Integer update(ArticleScoreRecord articleScoreRecord);
+	
 	public Integer countByNewsTransferId(@Param("articleId") Long articleId, @Param("newsTransferId") Long newsTransferId);
 	
 }

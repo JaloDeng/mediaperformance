@@ -30,21 +30,21 @@
 	
 	<sql id="Article_List" >
 		id, type, newsType, newsSourceId, newsTransferId, paperPublishTime, appPublishTime, pageName, category, 
-		paperTitle, appTitle, author, editor, wordCount, url, remark, createUser, createTime, updateUser, updateTime
+		paperTitle, appTitle, author, editor, wordCount, url, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		INSERT INTO t_article(
 			  type, newsType, newsSourceId, newsTransferId
 			, paperPublishTime, appPublishTime, pageName, category
-			, paperTitle, appTitle, author, editor, wordCount, url, remark
+			, paperTitle, appTitle, author, editor, wordCount, url
 			, createUser, createTime, updateUser, updateTime
 		)
 		values(
 			  #{type}, #{newsType}, #{newsSourceId}, #{newsTransferId}
 			, #{paperPublishTime}, #{appPublishTime}, #{pageName}, #{category}
 			, #{appTitle}, #{author}, #{editor}, #{wordCount}
-			, #{paperTitle}, #{appTitle}, #{author}, #{editor}, #{wordCount}, #{url}, #{remark}
+			, #{paperTitle}, #{appTitle}, #{author}, #{editor}, #{wordCount}, #{url}
 			, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
 		)
 	</insert>
@@ -70,8 +70,8 @@
 			,a.editor
 			,a.wordCount
 			,a.url
-			,a.remark
 			,asr.scoreId
+			,asr.remark
 			,score.score
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
@@ -128,8 +128,8 @@
 			,a.editor
 			,a.wordCount
 			,a.url
-			,a.remark
 			,asr.scoreId
+			,asr.remark
 			,score.score
 		FROM t_article a 
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
@@ -175,9 +175,6 @@
 			</if>
 			<if test="url != null">
 				url = #{url, jdbcType = VARCHAR},
-			</if>
-			<if test="remark != null">
-				remark = #{remark, jdbcType = VARCHAR},
 			</if>
 			<if test="updateUser != null">
 				updateUser = #{updateUser, jdbcType = VARCHAR},

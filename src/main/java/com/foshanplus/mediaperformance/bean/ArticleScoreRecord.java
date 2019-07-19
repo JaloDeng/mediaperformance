@@ -20,6 +20,8 @@ public class ArticleScoreRecord {
 	
 	private String scoreId;
 	
+	private String remark;
+	
 	private String createUser;
 	
 	private Date createTime;
@@ -50,6 +52,14 @@ public class ArticleScoreRecord {
 
 	public void setNewsSourceId(Long newsSourceId) {
 		this.newsSourceId = newsSourceId;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	public Long getNewsTransferId() {
