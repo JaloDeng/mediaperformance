@@ -49,6 +49,8 @@ public class Article {
 	
 	private Integer score;
 	
+	private Integer clickCount;
+	
 	private String createUser;
 	
 	private Date createTime;
@@ -199,6 +201,14 @@ public class Article {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public Integer getClickCount() {
+		return clickCount;
+	}
+
+	public void setClickCount(Integer clickCount) {
+		this.clickCount = clickCount;
 	}
 
 	public String getCreateUser() {

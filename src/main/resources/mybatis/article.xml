@@ -22,6 +22,7 @@
 		<result column="remark" property="remark"/>
 		<result column="scoreId" property="scoreId"/>
 		<result column="score" property="score"/>
+		<result column="clickCount" property="clickCount"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
 		<result column="updateUser" property="updateUser"/>
@@ -43,7 +44,6 @@
 		values(
 			  #{type}, #{newsType}, #{newsSourceId}, #{newsTransferId}
 			, #{paperPublishTime}, #{appPublishTime}, #{pageName}, #{category}
-			, #{appTitle}, #{author}, #{editor}, #{wordCount}
 			, #{paperTitle}, #{appTitle}, #{author}, #{editor}, #{wordCount}, #{url}
 			, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
 		)
@@ -73,9 +73,11 @@
 			,asr.scoreId
 			,asr.remark
 			,CASE score.id WHEN '手动打分' THEN NULL ELSE CONCAT(score.score, '') END AS score
+			,acc.clickCount
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_score score ON score.id = asr.scoreId
+		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
 		<where>
 		<if test="type != null">
 			AND a.type = #{type}
@@ -131,9 +133,11 @@
 			,asr.scoreId
 			,asr.remark
 			,CASE score.id WHEN '手动打分' THEN NULL ELSE CONCAT(score.score, '') END AS score
+			,acc.clickCount
 		FROM t_article a 
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_score score ON score.id = asr.scoreId
+		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
 		where a.id = #{id}
 	</select>
 	
