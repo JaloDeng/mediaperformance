@@ -8,7 +8,7 @@ apply plugin: 'io.spring.dependency-management'
 apply plugin: 'eclipse'
 
 group = 'com.foshanplus'
-version = '0.0.1-SNAPSHOT'
+version = ''
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 

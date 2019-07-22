@@ -3,4 +3,4 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'mediaperformance'
+rootProject.name = 'ROOT'
