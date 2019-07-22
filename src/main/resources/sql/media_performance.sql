@@ -15,7 +15,7 @@ CREATE TABLE `t_article` (
   `newsType` tinyint(4) DEFAULT NULL COMMENT '文章类型，1：文字稿、2：图片稿，3：音频稿',
   `newsSourceId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newssource.id、newssourceid',
   `newsTransferId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id',
-  `newsTransferIds` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id，数组用逗号隔开，用于记录组图中但个图片的记录',
+  `newsTransferIds` varchar(200) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id，数组用逗号隔开，用于记录组图中但个图片的记录',
   `paperPublishTime` date DEFAULT NULL COMMENT '见报日期',
   `appPublishTime` datetime DEFAULT NULL COMMENT 'APP发布时间',
   `pageName` varchar(50) DEFAULT NULL COMMENT '版面',
