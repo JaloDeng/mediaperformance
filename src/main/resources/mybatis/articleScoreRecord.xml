@@ -9,6 +9,7 @@
 		<result column="newsSourceId" property="newsSourceId"/>
 		<result column="newsTransferId" property="newsTransferId"/>
 		<result column="scoreId" property="scoreId"/>
+		<result column="score" property="score"/>
 		<result column="remark" property="remark"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
@@ -17,24 +18,30 @@
 	</resultMap>
 	
 	<sql id="Base_List" >
-		id, articleId, newsSourceId, newsTransferId, scoreId, remark, createUser, createTime, updateUser, updateTime
+		id, articleId, newsSourceId, newsTransferId, scoreId, score, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
-		INSERT INTO t_article_score_record(articleId, newsSourceId, newsTransferId, scoreId, remark, createUser, updateUser)
-		values(#{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{remark}, #{createUser}, #{updateUser})
+		INSERT INTO t_article_score_record(articleId, newsSourceId, newsTransferId, scoreId, score, remark, createUser, updateUser)
+		values(#{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{score}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
 	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
-		UPDATE t_article_score_record SET remark = #{remark}, updateUser = #{updateUser} WHERE articleId = #{articleId}
+		UPDATE t_article_score_record 
+		SET 
+			scoreId = #{scoreId}
+			, score = #{score}
+			, remark = #{remark}
+			, updateUser = #{updateUser} 
+		WHERE newsTransferId = #{newsTransferId}
 	</update>
 	
 	<select id="countByNewsTransferId" resultType="java.lang.Integer">
 		SELECT 
 			COUNT(1) 
 		FROM t_article_score_record asr 
-		WHERE asr.articleId = #{articleId}
-			OR asr.newsTransferId = #{newsTransferId} 
+		WHERE asr.newsTransferId = #{newsTransferId} 
+			OR asr.articleId = #{articleId}
 	</select>
 	
 </mapper>

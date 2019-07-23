@@ -71,12 +71,11 @@
 			,a.wordCount
 			,a.url
 			,asr.scoreId
+			,asr.score
 			,asr.remark
-			,CASE score.id WHEN '手动打分' THEN NULL ELSE CONCAT(score.score, '') END AS score
 			,acc.clickCount
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
-		LEFT JOIN t_article_score score ON score.id = asr.scoreId
 		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
 		<where>
 		<if test="type != null">
@@ -131,12 +130,11 @@
 			,a.wordCount
 			,a.url
 			,asr.scoreId
+			,asr.score
 			,asr.remark
-			,CASE score.id WHEN '手动打分' THEN NULL ELSE CONCAT(score.score, '') END AS score
 			,acc.clickCount
 		FROM t_article a 
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
-		LEFT JOIN t_article_score score ON score.id = asr.scoreId
 		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
 		where a.id = #{id}
 	</select>

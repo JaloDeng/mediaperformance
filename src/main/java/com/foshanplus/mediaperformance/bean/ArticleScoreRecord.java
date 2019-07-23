@@ -20,6 +20,8 @@ public class ArticleScoreRecord {
 	
 	private String scoreId;
 	
+	private Integer score;
+	
 	private String remark;
 	
 	private String createUser;
@@ -76,6 +78,14 @@ public class ArticleScoreRecord {
 
 	public void setScoreId(String scoreId) {
 		this.scoreId = scoreId;
+	}
+
+	public Integer getScore() {
+		return score;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
 	}
 
 	public String getCreateUser() {

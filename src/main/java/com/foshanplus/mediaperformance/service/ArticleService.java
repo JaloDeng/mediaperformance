@@ -38,11 +38,11 @@ public class ArticleService {
 		try {
 			if (article.getId() != null) {
 				articleMapper.update(article);
-				addArticleScoreRecord(article);
+				saveArticleScoreRecord(article);
 				return new Result<Article>("修改成功", true);
 			} else {
 				articleMapper.add(article);
-				addArticleScoreRecord(article);
+				saveArticleScoreRecord(article);
 				return new Result<Article>("新增成功", true);
 			}
 		} catch (Exception e) {
@@ -75,16 +75,17 @@ public class ArticleService {
 		return new Result<List<ArticleScore>>(articleScoreMapper.findAll());
 	}
 	
-	private void addArticleScoreRecord(Article article) {
+	private void saveArticleScoreRecord(Article article) {
 		ArticleScoreRecord articleScoreRecord = new ArticleScoreRecord();
 		articleScoreRecord.setArticleId(article.getId());
 		articleScoreRecord.setNewsSourceId(article.getNewsSourceId());
 		articleScoreRecord.setNewsTransferId(article.getNewsTransferId());
 		articleScoreRecord.setScoreId(article.getScoreId());
+		articleScoreRecord.setScore(article.getScore());
 		articleScoreRecord.setRemark(article.getRemark());
-		articleScoreRecord.setCreateUser("SYSTEM");
 		articleScoreRecord.setUpdateUser("SYSTEM");
 		if (articleScoreRecordMapper.countByNewsTransferId(article.getId(), article.getNewsTransferId()) == 0) {
+			articleScoreRecord.setCreateUser("SYSTEM");
 			articleScoreRecordMapper.add(articleScoreRecord);
 		} else {
 			articleScoreRecordMapper.update(articleScoreRecord);

@@ -55,6 +55,7 @@ CREATE TABLE `t_article_score_record` (
   `newsSourceId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newssource.id、newssourceid',
   `newsTransferId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id',
   `scoreId` varchar(10) DEFAULT NULL COMMENT '文章评分表主键ID，t_article_score.id',
+  `score` int(11) DEFAULT NULL COMMENT '分数，除手动打分外自动填写',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
   `createUser` varchar(100) DEFAULT NULL COMMENT '创建用户',
   `createTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
