@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.foshanplus.mediaperformance.mapper.ArticleScoreRecordAuthorMapper" >
+
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor" >
+		<result column="id" property="id"/>
+		<result column="scoreRecordId" property="scoreRecordId"/>
+		<result column="author" property="author"/>
+		<result column="percent" property="percent"/>
+		<result column="createUser" property="createUser"/>
+		<result column="createTime" property="createTime"/>
+		<result column="updateUser" property="updateUser"/>
+		<result column="updateTime" property="updateTime"/>
+	</resultMap>
+	
+	<sql id="Base_List" >
+		id, scoreRecordId, author, percent, createUser, createTime, updateUser, updateTime
+	</sql>
+	
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor">
+		INSERT INTO t_article_score_record_author(scoreRecordId, author, percent, createUser, updateUser)
+		values(#{scoreRecordId}, #{author}, #{percent}, #{createUser}, #{updateUser})
+	</insert>
+	
+	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor">
+		UPDATE t_article_score_record_author 
+		SET 
+			author = #{author}
+			, percent = #{percent}
+			, updateUser = #{updateUser} 
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteByIds">
+		DELETE FROM t_article_score_record_author WHERE id IN
+		<foreach collection="ids" open="(" close=")" separator="," item="ids">
+			#{ids}
+		</foreach>
+	</delete>
+	
+	<select id="findIdsByScoreRecordId" resultType="java.lang.Long">
+		SELECT asra.id FROM t_article_score_record_author asra WHERE asra.scoreRecordId = #{scoreRecordId} 
+	</select>
+	
+</mapper>
