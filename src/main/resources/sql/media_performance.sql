@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS `media_performance`.`t_article`;
 DROP TABLE IF EXISTS `media_performance`.`t_article_click_count`;
 DROP TABLE IF EXISTS `media_performance`.`t_article_score`;
 DROP TABLE IF EXISTS `media_performance`.`t_article_score_record`;
+DROP TABLE IF EXISTS `media_performance`.`t_article_score_record_author`;
 CREATE TABLE `t_article` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `type` tinyint(4) DEFAULT NULL COMMENT '类型，1：只发APP、2：先发APP再发纸媒、3：先发纸媒再发APP、4：只发报纸',
@@ -66,6 +67,18 @@ CREATE TABLE `t_article_score_record` (
   KEY `index_t_article_score_record_scoreId` (`scoreId`) USING BTREE,
   KEY `index_t_article_score_record_newsTransferId` (`newsTransferId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章评分记录表';
+CREATE TABLE `t_article_score_record_author` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `scoreRecordId` bigint(20) DEFAULT NULL COMMENT '文章评分记录表主键ID，t_article_score_record.id',
+  `author` varchar(200) DEFAULT NULL COMMENT '作者',
+  `percent` decimal(6,2) DEFAULT NULL COMMENT '百分数占比，100则为100%',
+  `createUser` varchar(100) DEFAULT NULL COMMENT '创建用户',
+  `createTime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updateUser` varchar(100) DEFAULT NULL COMMENT '更新用户',
+  `updateTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `index_t_article_author_score_scoreRecordId` (`scoreRecordId`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='作者文章分数百分占比数表';
 BEGIN;
 LOCK TABLES `media_performance`.`t_article` WRITE;
 DELETE FROM `media_performance`.`t_article`;
@@ -85,5 +98,10 @@ COMMIT;
 BEGIN;
 LOCK TABLES `media_performance`.`t_article_score_record` WRITE;
 DELETE FROM `media_performance`.`t_article_score_record`;
+UNLOCK TABLES;
+COMMIT;
+BEGIN;
+LOCK TABLES `media_performance`.`t_article_score_record_author` WRITE;
+DELETE FROM `media_performance`.`t_article_score_record_author`;
 UNLOCK TABLES;
 COMMIT;

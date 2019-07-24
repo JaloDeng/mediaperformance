@@ -1,6 +1,7 @@
 package com.foshanplus.mediaperformance.bean;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -43,12 +44,6 @@ public class Article {
 	
 	private String url;
 	
-	private String remark;
-	
-	private String scoreId;
-	
-	private Integer score;
-	
 	private Integer clickCount;
 	
 	private String createUser;
@@ -58,6 +53,10 @@ public class Article {
 	private String updateUser;
 	
 	private Date updateTime;
+	
+	private ArticleScoreRecord articleScoreRecord;
+	
+	private List<ArticleScoreRecordAuthor> articleScoreRecordAuthors;
 
 	public Long getId() {
 		return id;
@@ -179,30 +178,6 @@ public class Article {
 		this.url = url;
 	}
 
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public String getScoreId() {
-		return scoreId;
-	}
-
-	public void setScoreId(String scoreId) {
-		this.scoreId = scoreId;
-	}
-
-	public Integer getScore() {
-		return score;
-	}
-
-	public void setScore(Integer score) {
-		this.score = score;
-	}
-
 	public Integer getClickCount() {
 		return clickCount;
 	}
@@ -241,6 +216,22 @@ public class Article {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public ArticleScoreRecord getArticleScoreRecord() {
+		return articleScoreRecord;
+	}
+
+	public void setArticleScoreRecord(ArticleScoreRecord articleScoreRecord) {
+		this.articleScoreRecord = articleScoreRecord;
+	}
+
+	public List<ArticleScoreRecordAuthor> getArticleScoreRecordAuthors() {
+		return articleScoreRecordAuthors;
+	}
+
+	public void setArticleScoreRecordAuthors(List<ArticleScoreRecordAuthor> articleScoreRecordAuthors) {
+		this.articleScoreRecordAuthors = articleScoreRecordAuthors;
 	}
 
 }

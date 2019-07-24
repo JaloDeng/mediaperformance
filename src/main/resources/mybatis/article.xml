@@ -19,14 +19,34 @@
 		<result column="editor" property="editor"/>
 		<result column="wordCount" property="wordCount"/>
 		<result column="url" property="url"/>
-		<result column="remark" property="remark"/>
-		<result column="scoreId" property="scoreId"/>
-		<result column="score" property="score"/>
 		<result column="clickCount" property="clickCount"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
 		<result column="updateUser" property="updateUser"/>
 		<result column="updateTime" property="updateTime"/>
+		<association property="articleScoreRecord" javaType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
+			<result column="asr_id" property="id"/>
+			<result column="asr_articleId" property="articleId"/>
+			<result column="asr_newsSourceId" property="newsSourceId"/>
+			<result column="asr_newsTransferId" property="newsTransferId"/>
+			<result column="asr_scoreId" property="scoreId"/>
+			<result column="asr_score" property="score"/>
+			<result column="asr_remark" property="remark"/>
+			<result column="asr_createUser" property="createUser"/>
+			<result column="asr_createTime" property="createTime"/>
+			<result column="asr_updateUser" property="updateUser"/>
+			<result column="asr_updateTime" property="updateTime"/>
+		</association>
+		<collection property="articleScoreRecordAuthors" ofType="com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor">
+			<result column="asra_id" property="id"/>
+			<result column="asra_scoreRecordId" property="scoreRecordId"/>
+			<result column="asra_author" property="author"/>
+			<result column="asra_percent" property="percent"/>
+			<result column="asra_createUser" property="createUser"/>
+			<result column="asra_createTime" property="createTime"/>
+			<result column="asra_updateUser" property="updateUser"/>
+			<result column="asra_updateTime" property="updateTime"/>
+		</collection>
 	</resultMap>
 	
 	<sql id="Article_List" >
@@ -70,10 +90,10 @@
 			,a.editor
 			,a.wordCount
 			,a.url
-			,asr.scoreId
-			,asr.score
-			,asr.remark
 			,acc.clickCount
+			,asr.scoreId AS asr_scoreId
+			,asr.score AS asr_score
+			,asr.remark AS asr_remark
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
@@ -129,13 +149,23 @@
 			,a.editor
 			,a.wordCount
 			,a.url
-			,asr.scoreId
-			,asr.score
-			,asr.remark
 			,acc.clickCount
+			,asr.id AS asr_id
+			,asr.scoreId AS asr_scoreId
+			,asr.score AS asr_score
+			,asr.remark AS asr_remark
+			,asra.id as asra_id
+			,asra.scoreRecordId as asra_scoreRecordId
+			,asra.author as asra_author
+			,asra.percent as asra_percent
+			,asra.createUser as asra_createUser
+			,asra.createTime as asra_createTime
+			,asra.updateUser as asra_updateUser
+			,asra.updateTime as asra_updateTime
 		FROM t_article a 
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
+		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		where a.id = #{id}
 	</select>
 	

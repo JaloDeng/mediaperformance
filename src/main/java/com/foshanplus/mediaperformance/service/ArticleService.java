@@ -1,5 +1,6 @@
 package com.foshanplus.mediaperformance.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.ArticleScore;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecord;
+import com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor;
 import com.foshanplus.mediaperformance.mapper.ArticleMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreMapper;
+import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordAuthorMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordMapper;
 import com.foshanplus.mediaperformance.result.Result;
 import com.github.pagehelper.Page;
@@ -33,6 +36,9 @@ public class ArticleService {
 	
 	@Autowired
 	private ArticleScoreRecordMapper articleScoreRecordMapper;
+	
+	@Autowired
+	private ArticleScoreRecordAuthorMapper articleScoreRecordAuthorMapper;
 
 	public Result<Article> save(Article article) {
 		try {
@@ -75,20 +81,48 @@ public class ArticleService {
 		return new Result<List<ArticleScore>>(articleScoreMapper.findAll());
 	}
 	
-	private void saveArticleScoreRecord(Article article) {
-		ArticleScoreRecord articleScoreRecord = new ArticleScoreRecord();
+	private void saveArticleScoreRecord(Article article) throws Exception {
+		ArticleScoreRecord articleScoreRecord = article.getArticleScoreRecord();
 		articleScoreRecord.setArticleId(article.getId());
 		articleScoreRecord.setNewsSourceId(article.getNewsSourceId());
 		articleScoreRecord.setNewsTransferId(article.getNewsTransferId());
-		articleScoreRecord.setScoreId(article.getScoreId());
-		articleScoreRecord.setScore(article.getScore());
-		articleScoreRecord.setRemark(article.getRemark());
 		articleScoreRecord.setUpdateUser("SYSTEM");
 		if (articleScoreRecordMapper.countByNewsTransferId(article.getId(), article.getNewsTransferId()) == 0) {
-			articleScoreRecord.setCreateUser("SYSTEM");
-			articleScoreRecordMapper.add(articleScoreRecord);
+			if ((articleScoreRecord.getScoreId() != null && articleScoreRecord.getScoreId() != "")
+					|| (articleScoreRecord.getRemark() != null && articleScoreRecord.getRemark() != "")) {
+				articleScoreRecord.setCreateUser("SYSTEM");
+				articleScoreRecordMapper.add(articleScoreRecord);
+			}
 		} else {
 			articleScoreRecordMapper.update(articleScoreRecord);
+		}
+		if (articleScoreRecord.getScoreId() != null && articleScoreRecord.getScoreId() != "") {
+			saveArticleScoreRecordAuthor(articleScoreRecord, article.getArticleScoreRecordAuthors());
+		}
+	}
+	
+	private void saveArticleScoreRecordAuthor(ArticleScoreRecord articleScoreRecord, List<ArticleScoreRecordAuthor> articleScoreRecordAuthors) throws Exception {
+		if (articleScoreRecord.getId() == null) {
+			throw new Exception("文章打分不成功");
+		}
+		List<Long> oldIds = articleScoreRecordAuthorMapper.findIdsByScoreRecordId(articleScoreRecord.getId());
+		List<Long> newIds = new ArrayList<Long>();
+		// 新增或更新t_article_score_record_author表
+		articleScoreRecordAuthors.stream().forEach(articleScoreRecordAuthor -> {
+			newIds.add(articleScoreRecordAuthor.getId());
+			articleScoreRecordAuthor.setScoreRecordId(articleScoreRecord.getId());
+			articleScoreRecordAuthor.setUpdateUser("SYSTEM");
+			if (articleScoreRecordAuthor.getId() == null) {
+				articleScoreRecordAuthor.setCreateUser("SYSTEM");
+				articleScoreRecordAuthorMapper.add(articleScoreRecordAuthor);
+			} else {
+				articleScoreRecordAuthorMapper.update(articleScoreRecordAuthor);
+			}
+		});
+		// 前端没有提交的id与数据库对比，没有则删除
+		oldIds.removeAll(newIds);
+		if (!oldIds.isEmpty()) {
+			articleScoreRecordAuthorMapper.deleteByIds(oldIds);
 		}
 	}
 }
