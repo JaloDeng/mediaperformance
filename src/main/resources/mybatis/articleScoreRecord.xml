@@ -21,7 +21,7 @@
 		id, articleId, newsSourceId, newsTransferId, scoreId, score, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
-	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_article_score_record(articleId, newsSourceId, newsTransferId, scoreId, score, remark, createUser, updateUser)
 		values(#{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{score}, #{remark}, #{createUser}, #{updateUser})
 	</insert>

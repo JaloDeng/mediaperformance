@@ -18,7 +18,7 @@
 		id, scoreRecordId, author, percent, createUser, createTime, updateUser, updateTime
 	</sql>
 	
-	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor">
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_article_score_record_author(scoreRecordId, author, percent, createUser, updateUser)
 		values(#{scoreRecordId}, #{author}, #{percent}, #{createUser}, #{updateUser})
 	</insert>
