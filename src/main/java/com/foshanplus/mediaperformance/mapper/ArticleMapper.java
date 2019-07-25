@@ -1,8 +1,11 @@
 package com.foshanplus.mediaperformance.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 import com.foshanplus.mediaperformance.bean.Article;
+import com.foshanplus.mediaperformance.excel.model.ArticleModel;
 import com.github.pagehelper.Page;
 
 /**
@@ -14,6 +17,13 @@ import com.github.pagehelper.Page;
 public interface ArticleMapper {
 
 	public Integer add(Article article);
+	
+	public List<ArticleModel> exportToExcel(@Param("type") Integer type,
+			@Param("paperStartTime") String paperStartTime, @Param("paperEndTime") String paperEndTime,
+			@Param("appStartTime") String appStartTime, @Param("appEndTime") String appEndTime,
+			@Param("paperTitle") String paperTitle, @Param("appTitle") String appTitle,
+			@Param("author") String author, @Param("editor") String editor, 
+			@Param("isScore") Integer isScore, @Param("scoreId") Integer scoreId);
 	
 	public void delete(Long id);
 

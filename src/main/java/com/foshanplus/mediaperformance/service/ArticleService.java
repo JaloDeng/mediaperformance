@@ -3,6 +3,7 @@ package com.foshanplus.mediaperformance.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.ArticleScore;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecord;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor;
+import com.foshanplus.mediaperformance.excel.model.ArticleModel;
 import com.foshanplus.mediaperformance.mapper.ArticleMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordAuthorMapper;
@@ -54,6 +56,15 @@ public class ArticleService {
 		} catch (Exception e) {
 			return new Result<Article>("保存失败 : " + e.toString(), false);
 		}
+	}
+	
+	public List<ArticleModel> exportToExcel(@Param("type") Integer type, @Param("paperStartTime") String paperStartTime,
+			@Param("paperEndTime") String paperEndTime, @Param("appStartTime") String appStartTime,
+			@Param("appEndTime") String appEndTime, @Param("paperTitle") String paperTitle,
+			@Param("appTitle") String appTitle, @Param("author") String author, @Param("editor") String editor,
+			@Param("isScore") Integer isScore, @Param("scoreId") Integer scoreId) {
+		return articleMapper.exportToExcel(type, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,
+				appTitle, author, editor, isScore, scoreId);
 	}
 	
 	public Result<Article> delete(Long id) {

@@ -54,6 +54,42 @@
 		paperTitle, appTitle, author, editor, wordCount, url, createUser, createTime, updateUser, updateTime
 	</sql>
 	
+	<sql id="Where_Clause">
+		<where>
+		<if test="type != null">
+			AND a.type = #{type}
+		</if>
+		<if test="paperStartTime != null and paperStartTime != '' and paperEndTime != null and paperEndTime != ''">
+			AND a.paperPublishTime between #{paperStartTime} AND #{paperEndTime}
+		</if>
+		<if test="appStartTime != null and appStartTime != '' and appEndTime != null and appEndTime != ''">
+			AND a.appPublishTime between #{appStartTime} AND #{appEndTime}
+		</if>
+		<if test="paperTitle != null and paperTitle != ''">
+			AND a.paperTitle like CONCAT('%', '${paperTitle}', '%')
+		</if>
+		<if test="appTitle != null and appTitle != ''">
+			AND a.appTitle like CONCAT('%', '${appTitle}', '%')
+		</if>
+		<if test="author != null and author != ''">
+			AND a.author like CONCAT('%', '${author}', '%')
+		</if>
+		<if test="isScore != null and isScore != '' ">
+		<choose>
+			<when test="isScore == 1">
+				AND NOT ISNULL(asr.id)
+			</when>
+			<otherwise>
+				AND ISNULL(asr.id)
+			</otherwise>
+		</choose>
+		</if>
+		<if test="scoreId != null and scoreId != '' ">
+			AND asr.scoreId = #{scoreId}
+		</if>
+		</where>
+	</sql>
+	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		INSERT INTO t_article(
 			  type, newsType, newsSourceId, newsTransferId
@@ -97,39 +133,27 @@
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
-		<where>
-		<if test="type != null">
-			AND a.type = #{type}
-		</if>
-		<if test="paperStartTime != null and paperStartTime != '' and paperEndTime != null and paperEndTime != ''">
-			AND a.paperPublishTime between #{paperStartTime} AND #{paperEndTime}
-		</if>
-		<if test="appStartTime != null and appStartTime != '' and appEndTime != null and appEndTime != ''">
-			AND a.appPublishTime between #{appStartTime} AND #{appEndTime}
-		</if>
-		<if test="paperTitle != null and paperTitle != ''">
-			AND a.paperTitle like CONCAT('%', '${paperTitle}', '%')
-		</if>
-		<if test="appTitle != null and appTitle != ''">
-			AND a.appTitle like CONCAT('%', '${appTitle}', '%')
-		</if>
-		<if test="author != null and author != ''">
-			AND a.author like CONCAT('%', '${author}', '%')
-		</if>
-		<if test="isScore != null and isScore != '' ">
-		<choose>
-			<when test="isScore == 1">
-				AND NOT ISNULL(asr.id)
-			</when>
-			<otherwise>
-				AND ISNULL(asr.id)
-			</otherwise>
-		</choose>
-		</if>
-		<if test="scoreId != null and scoreId != '' ">
-			AND asr.scoreId = #{scoreId}
-		</if>
-		</where>
+		<include refid="Where_Clause"/>
+	</select>
+	
+	<select id="exportToExcel" resultType="com.foshanplus.mediaperformance.excel.model.ArticleModel">
+		SELECT 
+			a.paperPublishTime
+			,a.appPublishTime
+			,a.paperTitle
+			,a.appTitle
+			,a.author
+			,a.editor
+			,a.wordCount
+			,a.url
+			,acc.clickCount
+			,asr.scoreId
+			,asr.score
+			,asr.remark
+		FROM t_article a
+		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
+		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
+		<include refid="Where_Clause"/>
 	</select>
 	
 	<select id="findById" resultMap="BaseResultMap">
