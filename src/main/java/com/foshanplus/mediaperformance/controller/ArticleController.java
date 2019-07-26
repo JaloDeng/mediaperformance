@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.excel.metadata.Sheet;
 import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.ArticleScore;
-import com.foshanplus.mediaperformance.excel.EasyExcelUtil;
-import com.foshanplus.mediaperformance.excel.model.ArticleModel;
+import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
 import com.foshanplus.mediaperformance.result.Result;
 import com.foshanplus.mediaperformance.service.ArticleService;
+import com.foshanplus.mediaperformance.utils.EasyExcelUtil;
 
 /**
  * @author Jalo Deng

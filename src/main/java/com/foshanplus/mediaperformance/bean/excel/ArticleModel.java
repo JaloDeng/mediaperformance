@@ -1,4 +1,4 @@
-package com.foshanplus.mediaperformance.excel.model;
+package com.foshanplus.mediaperformance.bean.excel;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;

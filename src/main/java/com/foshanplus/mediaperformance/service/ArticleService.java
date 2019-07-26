@@ -12,7 +12,7 @@ import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.ArticleScore;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecord;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor;
-import com.foshanplus.mediaperformance.excel.model.ArticleModel;
+import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
 import com.foshanplus.mediaperformance.mapper.ArticleMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordAuthorMapper;

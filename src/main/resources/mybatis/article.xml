@@ -136,7 +136,7 @@
 		<include refid="Where_Clause"/>
 	</select>
 	
-	<select id="exportToExcel" resultType="com.foshanplus.mediaperformance.excel.model.ArticleModel">
+	<select id="exportToExcel" resultType="com.foshanplus.mediaperformance.bean.excel.ArticleModel">
 		SELECT 
 			a.paperPublishTime
 			,a.appPublishTime

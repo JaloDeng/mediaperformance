@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.foshanplus.mediaperformance.bean.Article;
-import com.foshanplus.mediaperformance.excel.model.ArticleModel;
+import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
 import com.github.pagehelper.Page;
 
 /**
