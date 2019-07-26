@@ -1,5 +1,7 @@
 package com.foshanplus.mediaperformance.bean.excel;
 
+import java.math.BigDecimal;
+
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.metadata.BaseRowModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -40,13 +42,16 @@ public class ArticleModel extends BaseRowModel {
 	@ExcelProperty(value = "等级", index = 8)
 	private String scoreId;
 	
-	@ExcelProperty(value = "分数", index = 9)
+	@ExcelProperty(value = "文章分数", index = 9)
 	private Integer score;
 	
-	@ExcelProperty(value = "链接", index = 10)
+	@ExcelProperty(value = "作者分数", index = 10)
+	private BigDecimal authorScore;
+	
+	@ExcelProperty(value = "链接", index = 11)
 	private String url;
 	
-	@ExcelProperty(value = "备注", index = 11)
+	@ExcelProperty(value = "备注", index = 12)
 	private String remark;
 
 	public String getPaperPublishTime() {
@@ -127,6 +132,14 @@ public class ArticleModel extends BaseRowModel {
 
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+
+	public BigDecimal getAuthorScore() {
+		return authorScore;
+	}
+
+	public void setAuthorScore(BigDecimal authorScore) {
+		this.authorScore = authorScore;
 	}
 
 	public String getUrl() {

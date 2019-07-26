@@ -49,6 +49,43 @@
 		</collection>
 	</resultMap>
 	
+	<resultMap id="ListResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
+		<result column="id" property="id"/>
+		<result column="type" property="type"/>
+		<result column="newsType" property="newsType"/>
+		<result column="newsSourceId" property="newsSourceId"/>
+		<result column="newsTransferId" property="newsTransferId"/>
+		<result column="paperPublishTime" property="paperPublishTime"/>
+		<result column="appPublishTime" property="appPublishTime"/>
+		<result column="pageName" property="pageName"/>
+		<result column="category" property="category"/>
+		<result column="paperTitle" property="paperTitle"/>
+		<result column="appTitle" property="appTitle"/>
+		<result column="author" property="author"/>
+		<result column="editor" property="editor"/>
+		<result column="wordCount" property="wordCount"/>
+		<result column="url" property="url"/>
+		<result column="authorScore" property="authorScore"/>
+		<result column="clickCount" property="clickCount"/>
+		<result column="createUser" property="createUser"/>
+		<result column="createTime" property="createTime"/>
+		<result column="updateUser" property="updateUser"/>
+		<result column="updateTime" property="updateTime"/>
+		<association property="articleScoreRecord" javaType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
+			<result column="asr_id" property="id"/>
+			<result column="asr_articleId" property="articleId"/>
+			<result column="asr_newsSourceId" property="newsSourceId"/>
+			<result column="asr_newsTransferId" property="newsTransferId"/>
+			<result column="asr_scoreId" property="scoreId"/>
+			<result column="asr_score" property="score"/>
+			<result column="asr_remark" property="remark"/>
+			<result column="asr_createUser" property="createUser"/>
+			<result column="asr_createTime" property="createTime"/>
+			<result column="asr_updateUser" property="updateUser"/>
+			<result column="asr_updateTime" property="updateTime"/>
+		</association>
+	</resultMap>
+	
 	<sql id="Article_List" >
 		id, type, newsType, newsSourceId, newsTransferId, paperPublishTime, appPublishTime, pageName, category, 
 		paperTitle, appTitle, author, editor, wordCount, url, createUser, createTime, updateUser, updateTime
@@ -109,7 +146,7 @@
 		DELETE FROM t_article WHERE id = #{id}
 	</delete>
 	
-	<select id="findAll" resultMap="BaseResultMap">
+	<select id="findAll" resultMap="ListResultMap">
 		SELECT 
 			a.id
 			,a.type
@@ -122,7 +159,7 @@
 			,a.category
 			,a.paperTitle
 			,a.appTitle
-			,a.author
+			,CASE WHEN NOT ISNULL(asra.percent) THEN asra.author ELSE a.author END AS author
 			,a.editor
 			,a.wordCount
 			,a.url
@@ -130,9 +167,11 @@
 			,asr.scoreId AS asr_scoreId
 			,asr.score AS asr_score
 			,asr.remark AS asr_remark
+			,IFNULL(ROUND(asra.percent/100 * asr.score, 2), asr.score) AS authorScore
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
+		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		<include refid="Where_Clause"/>
 	</select>
 	
@@ -142,18 +181,28 @@
 			,a.appPublishTime
 			,a.paperTitle
 			,a.appTitle
-			,a.author
+			,CASE WHEN NOT ISNULL(asra.percent) THEN asra.author ELSE a.author END AS author
 			,a.editor
 			,a.wordCount
 			,a.url
 			,acc.clickCount
 			,asr.scoreId
 			,asr.score
+			,IFNULL(ROUND(asra.percent*asr.score/100,2), asr.score) AS authorScore
 			,asr.remark
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
+		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		<include refid="Where_Clause"/>
+		<choose>
+		<when test="type == 1 OR type == 2">
+			ORDER BY a.appPublishTime
+		</when>
+		<otherwise>
+			ORDER BY a.paperPublishTime
+		</otherwise>
+		</choose>
 	</select>
 	
 	<select id="findById" resultMap="BaseResultMap">

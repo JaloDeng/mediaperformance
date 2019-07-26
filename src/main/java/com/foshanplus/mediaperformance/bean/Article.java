@@ -1,5 +1,6 @@
 package com.foshanplus.mediaperformance.bean;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +58,8 @@ public class Article {
 	private ArticleScoreRecord articleScoreRecord;
 	
 	private List<ArticleScoreRecordAuthor> articleScoreRecordAuthors;
+	
+	private BigDecimal authorScore;
 
 	public Long getId() {
 		return id;
@@ -232,6 +235,14 @@ public class Article {
 
 	public void setArticleScoreRecordAuthors(List<ArticleScoreRecordAuthor> articleScoreRecordAuthors) {
 		this.articleScoreRecordAuthors = articleScoreRecordAuthors;
+	}
+
+	public BigDecimal getAuthorScore() {
+		return authorScore;
+	}
+
+	public void setAuthorScore(BigDecimal authorScore) {
+		this.authorScore = authorScore;
 	}
 
 }
