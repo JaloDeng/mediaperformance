@@ -196,7 +196,7 @@
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		<include refid="Where_Clause"/>
 		<choose>
-		<when test="type == 1 OR type == 2">
+		<when test="type == 1 or type == 2">
 			ORDER BY a.appPublishTime
 		</when>
 		<otherwise>
