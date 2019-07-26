@@ -68,6 +68,9 @@ public class ArticleService {
 	}
 	
 	public Result<Article> delete(Long id) {
+		if (articleScoreRecordMapper.countByArticleId(id) > 0) {
+			return new Result<Article>("删除失败 : 已打分的数据不能删除", false);
+		}
 		try {
 			articleMapper.delete(id);
 			return new Result<Article>("删除成功", true);

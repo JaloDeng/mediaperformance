@@ -36,6 +36,13 @@
 		WHERE newsTransferId = #{newsTransferId}
 	</update>
 	
+	<select id="countByArticleId" resultType="java.lang.Integer">
+		SELECT 
+			COUNT(1) 
+		FROM t_article_score_record asr 
+		WHERE asr.articleId = #{articleId}
+	</select>
+	
 	<select id="countByNewsTransferId" resultType="java.lang.Integer">
 		SELECT 
 			COUNT(1) 
