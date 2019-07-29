@@ -7,6 +7,7 @@
 		<result column="id" property="id"/>
 		<result column="type" property="type"/>
 		<result column="newsType" property="newsType"/>
+		<result column="newsTypeLabel" property="newsTypeLabel"/>
 		<result column="newsSourceId" property="newsSourceId"/>
 		<result column="newsTransferId" property="newsTransferId"/>
 		<result column="paperPublishTime" property="paperPublishTime"/>
@@ -53,6 +54,7 @@
 		<result column="id" property="id"/>
 		<result column="type" property="type"/>
 		<result column="newsType" property="newsType"/>
+		<result column="newsTypeLabel" property="newsTypeLabel"/>
 		<result column="newsSourceId" property="newsSourceId"/>
 		<result column="newsTransferId" property="newsTransferId"/>
 		<result column="paperPublishTime" property="paperPublishTime"/>
@@ -95,6 +97,9 @@
 		<where>
 		<if test="type != null">
 			AND a.type = #{type}
+		</if>
+		<if test="newsType != null">
+			AND a.newsType = #{newsType}
 		</if>
 		<if test="paperStartTime != null and paperStartTime != '' and paperEndTime != null and paperEndTime != ''">
 			AND a.paperPublishTime between #{paperStartTime} AND #{paperEndTime}
@@ -155,6 +160,7 @@
 			,a.newsTransferId
 			,a.paperPublishTime
 			,a.appPublishTime
+			,CASE a.newsType WHEN 'TEXT' THEN '文字稿' WHEN 'IMAGE' THEN '图片稿' WHEN 'AUDIOANDVIDEO' THEN '音视频' ELSE '' END AS newsTypeLabel
 			,a.pageName
 			,a.category
 			,a.paperTitle
@@ -179,6 +185,7 @@
 		SELECT 
 			a.paperPublishTime
 			,a.appPublishTime
+			,CASE a.newsType WHEN 'TEXT' THEN '文字稿' WHEN 'IMAGE' THEN '图片稿' WHEN 'AUDIOANDVIDEO' THEN '音视频' ELSE '' END AS newsTypeLabel
 			,a.paperTitle
 			,a.appTitle
 			,CASE WHEN NOT ISNULL(asra.percent) THEN asra.author ELSE a.author END AS author
@@ -249,7 +256,7 @@
 				type = #{type, jdbcType = TINYINT},
 			</if>
 			<if test="newsType != null">
-				newsType = #{newsType, jdbcType = TINYINT},
+				newsType = #{newsType},
 			</if>
 			<if test="paperPublishTime != null">
 				paperPublishTime = #{paperPublishTime, jdbcType = DATE},

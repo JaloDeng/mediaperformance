@@ -3,7 +3,6 @@ package com.foshanplus.mediaperformance.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +12,7 @@ import com.foshanplus.mediaperformance.bean.ArticleScore;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecord;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor;
 import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
+import com.foshanplus.mediaperformance.enums.NewsType;
 import com.foshanplus.mediaperformance.mapper.ArticleMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordAuthorMapper;
@@ -58,12 +58,10 @@ public class ArticleService {
 		}
 	}
 	
-	public List<ArticleModel> exportToExcel(@Param("type") Integer type, @Param("paperStartTime") String paperStartTime,
-			@Param("paperEndTime") String paperEndTime, @Param("appStartTime") String appStartTime,
-			@Param("appEndTime") String appEndTime, @Param("paperTitle") String paperTitle,
-			@Param("appTitle") String appTitle, @Param("author") String author, @Param("editor") String editor,
-			@Param("isScore") Integer isScore, @Param("scoreId") Integer scoreId) {
-		return articleMapper.exportToExcel(type, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,
+	public List<ArticleModel> exportToExcel(Integer type, NewsType newsType, String paperStartTime, String paperEndTime, String appStartTime,
+			String appEndTime, String paperTitle, String appTitle, String author, String editor, Integer isScore,
+			Integer scoreId) {
+		return articleMapper.exportToExcel(type, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,
 				appTitle, author, editor, isScore, scoreId);
 	}
 	
@@ -79,10 +77,10 @@ public class ArticleService {
 		}
 	}
 	
-	public Result<List<Article>> findAll(Integer type, String paperStartTime, String paperEndTime, String appStartTime,
+	public Result<List<Article>> findAll(Integer type, NewsType newsType, String paperStartTime, String paperEndTime, String appStartTime,
 			String appEndTime, String paperTitle, String appTitle, String author, String editor, Integer isScore,
 			Integer scoreId, Integer pageNum, Integer pageSize, String orderBy) {
-		Page<Article> articles = articleMapper.findAll(type, paperStartTime, paperEndTime, appStartTime, appEndTime, 
+		Page<Article> articles = articleMapper.findAll(type, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, 
 				paperTitle, appTitle, author, editor, isScore, scoreId, pageNum, pageSize, orderBy);
 		return new Result<List<Article>>(articles, articles.getPageNum(), articles.getPageSize(), articles.getTotal(), articles.getPages());
 	}

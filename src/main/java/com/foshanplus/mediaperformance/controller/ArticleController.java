@@ -3,6 +3,7 @@ package com.foshanplus.mediaperformance.controller;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import com.alibaba.excel.metadata.Sheet;
 import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.ArticleScore;
 import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
+import com.foshanplus.mediaperformance.enums.NewsType;
 import com.foshanplus.mediaperformance.result.Result;
 import com.foshanplus.mediaperformance.service.ArticleService;
 import com.foshanplus.mediaperformance.utils.EasyExcelUtil;
@@ -39,7 +41,7 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@GetMapping("/export/excel")
-	public void exportToExcel(@RequestParam(required = false) Integer type, 
+	public void exportToExcel(@RequestParam(required = false) Integer type, @RequestParam(required = false) NewsType newsType,
 			@RequestParam(required = false) String paperStartTime, @RequestParam(required = false) String paperEndTime,
 			@RequestParam(required = false) String appStartTime, @RequestParam(required = false) String appEndTime,
 			@RequestParam(required = false) String paperTitle, @RequestParam(required = false) String appTitle,
@@ -65,7 +67,7 @@ public class ArticleController {
 			break;
 		}
 		EasyExcelUtil.exportToXLSX(
-				articleService.exportToExcel(type, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,
+				articleService.exportToExcel(type, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,
 						appTitle, author, editor, isScore, scoreId),
 				fileNameBuilder.toString(), new Sheet(1, 0, ArticleModel.class), response);
 	}
@@ -81,7 +83,7 @@ public class ArticleController {
 	}
 	
 	@GetMapping("")
-	public Result<List<Article>> findAll(@RequestParam(required = false) Integer type, 
+	public Result<List<Article>> findAll(@RequestParam(required = false) Integer type, @RequestParam(required = false) NewsType newsType,
 			@RequestParam(required = false) String paperStartTime, @RequestParam(required = false) String paperEndTime,
 			@RequestParam(required = false) String appStartTime, @RequestParam(required = false) String appEndTime,
 			@RequestParam(required = false) String paperTitle, @RequestParam(required = false) String appTitle,
@@ -89,7 +91,7 @@ public class ArticleController {
 			@RequestParam(required = false) Integer isScore, @RequestParam(required = false) Integer scoreId,
 			@RequestParam(required = false, defaultValue = "1") Integer pageNum, @RequestParam(required = false, defaultValue = "100") Integer pageSize, 
 			@RequestParam(required = false) String orderBy, HttpServletRequest request, HttpServletResponse response) {
-		return articleService.findAll(type, paperStartTime, paperEndTime, appStartTime, appEndTime, 
+		return articleService.findAll(type, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, 
 				paperTitle, appTitle, author, editor, isScore, scoreId, pageNum, pageSize, orderBy);
 	}
 	
@@ -101,5 +103,10 @@ public class ArticleController {
 	@GetMapping("/score")
 	public Result<List<ArticleScore>> findArticleScoreAll() {
 		return articleService.findArticleScoreAll();
+	}
+	
+	@GetMapping("/newsType")
+	public Result<List<Map<String, Object>>> findNewsType() {
+		return new Result<List<Map<String, Object>>>(NewsType.getList());
 	}
 }

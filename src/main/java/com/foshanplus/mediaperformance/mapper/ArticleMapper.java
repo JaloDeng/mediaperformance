@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
+import com.foshanplus.mediaperformance.enums.NewsType;
 import com.github.pagehelper.Page;
 
 /**
@@ -18,7 +19,7 @@ public interface ArticleMapper {
 
 	public Integer add(Article article);
 	
-	public List<ArticleModel> exportToExcel(@Param("type") Integer type,
+	public List<ArticleModel> exportToExcel(@Param("type") Integer type, @Param("newsType") NewsType newsType,
 			@Param("paperStartTime") String paperStartTime, @Param("paperEndTime") String paperEndTime,
 			@Param("appStartTime") String appStartTime, @Param("appEndTime") String appEndTime,
 			@Param("paperTitle") String paperTitle, @Param("appTitle") String appTitle,
@@ -27,7 +28,7 @@ public interface ArticleMapper {
 	
 	public void delete(Long id);
 
-	public Page<Article> findAll(@Param("type") Integer type,
+	public Page<Article> findAll(@Param("type") Integer type, @Param("newsType") NewsType newsType,
 			@Param("paperStartTime") String paperStartTime, @Param("paperEndTime") String paperEndTime,
 			@Param("appStartTime") String appStartTime, @Param("appEndTime") String appEndTime,
 			@Param("paperTitle") String paperTitle, @Param("appTitle") String appTitle,

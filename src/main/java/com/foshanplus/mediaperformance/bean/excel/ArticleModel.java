@@ -21,37 +21,40 @@ public class ArticleModel extends BaseRowModel {
 	@ExcelProperty(value = "APP发布时间", index = 1)
 	private String appPublishTime;
 	
-	@ExcelProperty(value = "纸媒标题", index = 2)
+	@ExcelProperty(value = "新闻类型", index = 2)
+	private String newsTypeLabel;
+	
+	@ExcelProperty(value = "纸媒标题", index = 3)
 	private String paperTitle;
 	
-	@ExcelProperty(value = "APP标题", index = 3)
+	@ExcelProperty(value = "APP标题", index = 4)
 	private String appTitle;
 	
-	@ExcelProperty(value = "作者", index = 4)
+	@ExcelProperty(value = "作者", index = 5)
 	private String author;
 	
-	@ExcelProperty(value = "编辑", index = 5)
+	@ExcelProperty(value = "编辑", index = 6)
 	private String editor;
 	
-	@ExcelProperty(value = "字数", index = 6)
+	@ExcelProperty(value = "字数", index = 7)
 	private Integer wordCount;
 	
-	@ExcelProperty(value = "浏览量", index = 7)
+	@ExcelProperty(value = "浏览量", index = 8)
 	private Integer clickCount;
 	
-	@ExcelProperty(value = "等级", index = 8)
+	@ExcelProperty(value = "等级", index = 9)
 	private String scoreId;
 	
-	@ExcelProperty(value = "文章分数", index = 9)
+	@ExcelProperty(value = "文章分数", index = 10)
 	private Integer score;
 	
-	@ExcelProperty(value = "作者分数", index = 10)
+	@ExcelProperty(value = "作者分数", index = 11)
 	private BigDecimal authorScore;
 	
-	@ExcelProperty(value = "链接", index = 11)
+	@ExcelProperty(value = "链接", index = 12)
 	private String url;
 	
-	@ExcelProperty(value = "备注", index = 12)
+	@ExcelProperty(value = "备注", index = 13)
 	private String remark;
 
 	public String getPaperPublishTime() {
@@ -68,6 +71,14 @@ public class ArticleModel extends BaseRowModel {
 
 	public void setAppPublishTime(String appPublishTime) {
 		this.appPublishTime = appPublishTime;
+	}
+
+	public String getNewsTypeLabel() {
+		return newsTypeLabel;
+	}
+
+	public void setNewsTypeLabel(String newsTypeLabel) {
+		this.newsTypeLabel = newsTypeLabel;
 	}
 
 	public String getPaperTitle() {

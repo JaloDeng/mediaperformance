@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.foshanplus.mediaperformance.enums.NewsType;
 
 /**
  * @author Jalo Deng
@@ -18,7 +19,9 @@ public class Article {
 	
 	private Integer type;
 	
-	private Integer newsType;
+	private NewsType newsType;
+	
+	private String newsTypeLabel;
 	
 	private Long newsSourceId;
 	
@@ -77,12 +80,20 @@ public class Article {
 		this.type = type;
 	}
 
-	public Integer getNewsType() {
+	public NewsType getNewsType() {
 		return newsType;
 	}
 
-	public void setNewsType(Integer newsType) {
+	public void setNewsType(NewsType newsType) {
 		this.newsType = newsType;
+	}
+
+	public String getNewsTypeLabel() {
+		return newsTypeLabel;
+	}
+
+	public void setNewsTypeLabel(String newsTypeLabel) {
+		this.newsTypeLabel = newsTypeLabel;
 	}
 
 	public Long getNewsSourceId() {

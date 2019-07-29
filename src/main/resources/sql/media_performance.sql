@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS `media_performance`.`t_article_score_record_author`;
 CREATE TABLE `t_article` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `type` tinyint(4) DEFAULT NULL COMMENT '类型，1：只发APP、2：先发APP再发纸媒、3：先发纸媒再发APP、4：只发报纸',
-  `newsType` tinyint(4) DEFAULT NULL COMMENT '文章类型，1：文字稿、2：图片稿，3：音频稿',
+  `newsType` enum('TEXT','IMAGE','AUDIOANDVIDEO') DEFAULT 'TEXT' COMMENT '文章类型，TEXT：文字稿、IMAGE：图片稿，AUDIOANDVIDEO：音视频',
   `newsSourceId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newssource.id、newssourceid',
   `newsTransferId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id',
   `newsTransferIds` varchar(200) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id，数组用逗号隔开，用于记录组图中但个图片的记录',
