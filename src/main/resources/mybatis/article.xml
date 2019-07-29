@@ -5,7 +5,7 @@
 
 	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
 		<result column="id" property="id"/>
-		<result column="type" property="type"/>
+		<result column="exportType" property="exportType"/>
 		<result column="newsType" property="newsType"/>
 		<result column="newsTypeLabel" property="newsTypeLabel"/>
 		<result column="newsSourceId" property="newsSourceId"/>
@@ -52,7 +52,7 @@
 	
 	<resultMap id="ListResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
 		<result column="id" property="id"/>
-		<result column="type" property="type"/>
+		<result column="exportType" property="exportType"/>
 		<result column="newsType" property="newsType"/>
 		<result column="newsTypeLabel" property="newsTypeLabel"/>
 		<result column="newsSourceId" property="newsSourceId"/>
@@ -89,14 +89,14 @@
 	</resultMap>
 	
 	<sql id="Article_List" >
-		id, type, newsType, newsSourceId, newsTransferId, paperPublishTime, appPublishTime, pageName, category, 
+		id, exportType, newsType, newsSourceId, newsTransferId, paperPublishTime, appPublishTime, pageName, category, 
 		paperTitle, appTitle, author, editor, wordCount, url, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<sql id="Where_Clause">
 		<where>
-		<if test="type != null">
-			AND a.type = #{type}
+		<if test="exportType != null">
+			AND a.exportType = #{exportType}
 		</if>
 		<if test="newsType != null">
 			AND a.newsType = #{newsType}
@@ -134,13 +134,13 @@
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		INSERT INTO t_article(
-			  type, newsType, newsSourceId, newsTransferId
+			  exportType, newsType, newsSourceId, newsTransferId
 			, paperPublishTime, appPublishTime, pageName, category
 			, paperTitle, appTitle, author, editor, wordCount, url
 			, createUser, createTime, updateUser, updateTime
 		)
 		values(
-			  #{type}, #{newsType}, #{newsSourceId}, #{newsTransferId}
+			  #{exportType}, #{newsType}, #{newsSourceId}, #{newsTransferId}
 			, #{paperPublishTime}, #{appPublishTime}, #{pageName}, #{category}
 			, #{paperTitle}, #{appTitle}, #{author}, #{editor}, #{wordCount}, #{url}
 			, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
@@ -154,7 +154,7 @@
 	<select id="findAll" resultMap="ListResultMap">
 		SELECT 
 			a.id
-			,a.type
+			,a.exportType
 			,a.newsType
 			,a.newsSourceId
 			,a.newsTransferId
@@ -203,7 +203,8 @@
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		<include refid="Where_Clause"/>
 		<choose>
-		<when test="type == 1 or type == 2">
+		<when test="exportType == @com.foshanplus.mediaperformance.enums.ExportType@APP 
+			or exportType == @com.foshanplus.mediaperformance.enums.ExportType@APPTOPAPER">
 			ORDER BY a.appPublishTime
 		</when>
 		<otherwise>
@@ -215,7 +216,7 @@
 	<select id="findById" resultMap="BaseResultMap">
 		SELECT 
 			a.id
-			,a.type
+			,a.exportType
 			,a.newsType
 			,a.newsSourceId
 			,a.newsTransferId
@@ -252,8 +253,8 @@
 	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.Article">
 		update t_article
 		<set>
-			<if test="type != null">
-				type = #{type, jdbcType = TINYINT},
+			<if test="exportType != null">
+				exportType = #{exportType},
 			</if>
 			<if test="newsType != null">
 				newsType = #{newsType},

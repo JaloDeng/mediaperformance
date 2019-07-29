@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `media_performance`.`t_article_score_record`;
 DROP TABLE IF EXISTS `media_performance`.`t_article_score_record_author`;
 CREATE TABLE `t_article` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-  `type` tinyint(4) DEFAULT NULL COMMENT '类型，1：只发APP、2：先发APP再发纸媒、3：先发纸媒再发APP、4：只发报纸',
+  `exportType` enum('APP','APPTOPAPER','PAPERTOAPP','PAPER') DEFAULT 'APP' COMMENT '导出类型，APP：只发APP、APPTOPAPER：先发APP再发纸媒、PAPERTOAPP：先发纸媒再发APP、PAPER：只发报纸',
   `newsType` enum('TEXT','IMAGE','AUDIOANDVIDEO') DEFAULT 'TEXT' COMMENT '文章类型，TEXT：文字稿、IMAGE：图片稿，AUDIOANDVIDEO：音视频',
   `newsSourceId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newssource.id、newssourceid',
   `newsTransferId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id',
@@ -32,9 +32,9 @@ CREATE TABLE `t_article` (
   `updateUser` varchar(100) DEFAULT NULL COMMENT '更新用户',
   `updateTime` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  KEY `index_t_article_type` (`type`) USING BTREE COMMENT '文章类型索引',
   KEY `index_t_article_appTitle` (`appTitle`) USING BTREE COMMENT 'APP标题索引',
-  KEY `index_t_article_appPublishTime` (`appPublishTime`) USING BTREE COMMENT 'APP发布时间索引'
+  KEY `index_t_article_appPublishTime` (`appPublishTime`) USING BTREE COMMENT 'APP发布时间索引',
+  KEY `index_t_article_exportType` (`exportType`) USING BTREE COMMENT '导出文章类型索引'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章统计';
 CREATE TABLE `t_article_click_count` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',

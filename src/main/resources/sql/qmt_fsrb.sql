@@ -4,9 +4,9 @@ DECLARE @StartDate Varchar(10)
 DECLARE @EndDate Varchar(10)
 
 --修改查询起始日期
-Set @StartDate='2019-07-25'
+Set @StartDate='2019-07-27'
 --修改查询截止日期
-Set @EndDate='2019-07-26'
+Set @EndDate='2019-07-27'
 
 -- 1.只发APP不见报
  SELECT 
@@ -19,7 +19,7 @@ Set @EndDate='2019-07-26'
  	,'url' as url
  	,'newssourceid' as newssourceid
  	,'newsTransferId' as newsTransferId
- 	,'type' as type
+ 	,'exportType' as exportType
  	,'newsType' as newsType
  	,'createUser' as createUser
  	,'updateUser' as updateUser
@@ -35,7 +35,7 @@ Set @EndDate='2019-07-26'
  	,('http://59.38.110.226:8086/ycAppService/preview.do?id=' + convert(varchar(20), APP1.id)) as url
  	,CONVERT(VARCHAR(20), APP1.[newssourceid]) as newssourceid
  	,CONVERT(VARCHAR(20), APP1.[id]) as newsTransferId
- 	,'1' as type
+ 	,'APP' as exportType
  	,(CASE APP1.[newstype] WHEN 1 THEN 'TEXT' WHEN 2 THEN 'IMAGE' WHEN 3 THEN 'AUDIOANDVIDEO' ELSE 'TEXT' END) as newsType
  	,'SYSTEM' as createUser
  	,'SYSTEM' as updateUser
@@ -73,7 +73,7 @@ Set @EndDate='2019-07-26'
  	,'pageName' as pageName
  	,'newssourceid' as newssourceid
  	,'newsTransferId' as newsTransferId
- 	,'type' as type
+ 	,'exportType' as exportType
  	,'newsType' as newsType
  	,'createUser' as createUser
  	,'updateUser' as updateUser
@@ -92,7 +92,7 @@ Set @EndDate='2019-07-26'
  	,(SELECT [pagename] from [qmt_fsrb].[dbo].[t_pagecategory] WHERE [id]=PAPER.[pagecategoryid]) as pageName
  	,CONVERT(VARCHAR(20), APP.[newssourceid]) as newssourceid
  	,CONVERT(VARCHAR(20), APP.[id]) as newsTransferId
- 	,'2' as type
+ 	,'APPTOPAPER' as exportType
  	,(CASE APP.[newstype] WHEN 1 THEN 'TEXT' WHEN 2 THEN 'IMAGE' WHEN 3 THEN 'AUDIOANDVIDEO' ELSE 'TEXT' END) as newsType
  	,'SYSTEM' as createUser
  	,'SYSTEM' as updateUser
@@ -122,7 +122,7 @@ Set @EndDate='2019-07-26'
  	,'url' as url
  	,'newssourceid' as newssourceid
  	,'newsTransferId' as newsTransferId
- 	,'type' as type
+ 	,'exportType' as exportType
  	,'newsType' as newsType
  	,'createUser' as createUser
  	,'updateUser' as updateUser
@@ -141,7 +141,7 @@ Set @EndDate='2019-07-26'
  	,('http://59.38.110.226:8086/ycAppService/preview.do?id='+convert(varchar(20),APP.id)) as url
  	,CONVERT(VARCHAR(20), PAPER.[newssourceid]) as newssourceid
  	,CONVERT(VARCHAR(20), PAPER.[id]) as newsTransferId
- 	,'3' as type
+ 	,'PAPERTOAPP' as exportType
  	,(CASE PAPER.[newstype] WHEN 1 THEN 'TEXT' WHEN 2 THEN 'IMAGE' WHEN 3 THEN 'AUDIOANDVIDEO' ELSE 'TEXT' END) as newsType
  	,'SYSTEM' as createUser
  	,'SYSTEM' as updateUser
@@ -169,7 +169,7 @@ Set @EndDate='2019-07-26'
  	,'url' as url
  	,'newssourceid' as newssourceid
  	,'newsTransferId' as newsTransferId
- 	,'type' as type
+ 	,'exportType' as exportType
  	,'newsType' as newsType
  	,'createUser' as createUser
  	,'updateUser' as updateUser
@@ -185,7 +185,7 @@ Set @EndDate='2019-07-26'
  	,('http://59.38.110.226:8086/ycAppService/preview.do?id=' + convert(varchar(20),PAPER.id)) as url
  	,CONVERT(VARCHAR(20), PAPER.[newssourceid]) as newssourceid
  	,CONVERT(VARCHAR(20), PAPER.[id]) as newsTransferId
- 	,'4' as type
+ 	,'PAPER' as exportType
  	,(CASE PAPER.[newstype] WHEN 1 THEN 'TEXT' WHEN 2 THEN 'IMAGE' WHEN 3 THEN 'AUDIOANDVIDEO' ELSE 'TEXT' END) as newsType
  	,'SYSTEM' as createUser
  	,'SYSTEM' as updateUser

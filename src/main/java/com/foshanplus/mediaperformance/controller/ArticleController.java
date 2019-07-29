@@ -1,7 +1,5 @@
 package com.foshanplus.mediaperformance.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +20,7 @@ import com.alibaba.excel.metadata.Sheet;
 import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.ArticleScore;
 import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
+import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
 import com.foshanplus.mediaperformance.result.Result;
 import com.foshanplus.mediaperformance.service.ArticleService;
@@ -41,33 +40,21 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@GetMapping("/export/excel")
-	public void exportToExcel(@RequestParam(required = false) Integer type, @RequestParam(required = false) NewsType newsType,
+	public void exportToExcel(@RequestParam(required = false) ExportType exportType, @RequestParam(required = false) NewsType newsType,
 			@RequestParam(required = false) String paperStartTime, @RequestParam(required = false) String paperEndTime,
 			@RequestParam(required = false) String appStartTime, @RequestParam(required = false) String appEndTime,
 			@RequestParam(required = false) String paperTitle, @RequestParam(required = false) String appTitle,
 			@RequestParam(required = false) String author, @RequestParam(required = false) String editor,
 			@RequestParam(required = false) Integer isScore, @RequestParam(required = false) Integer scoreId,
 			HttpServletRequest request, HttpServletResponse response) {
-		StringBuilder fileNameBuilder = new StringBuilder("");
-		switch (type) {
-		case 1:
-			fileNameBuilder.append("只发APP ").append(appStartTime).append("至").append(appEndTime);
-			break;
-		case 2:
-			fileNameBuilder.append("先发APP后见报 ").append(appStartTime).append("至").append(appEndTime);
-			break;
-		case 3:
-			fileNameBuilder.append("先见报后发APP ").append(appStartTime).append("至").append(appEndTime);
-			break;
-		case 4:
-			fileNameBuilder.append("只见报 ").append(appStartTime).append("至").append(appEndTime);
-			break;
-		default:
-			fileNameBuilder.append(DateFormat.getDateInstance().format(new Date()));
-			break;
+		StringBuilder fileNameBuilder = new StringBuilder(exportType.getLabel());
+		if (exportType.equals(ExportType.APP) || exportType.equals(ExportType.APPTOPAPER)) {
+			fileNameBuilder.append(" ").append(appStartTime).append("至").append(appEndTime);
+		} else if (exportType.equals(ExportType.PAPERTOAPP) || exportType.equals(ExportType.PAPER)) {
+			fileNameBuilder.append(" ").append(paperStartTime).append("至").append(paperEndTime);
 		}
 		EasyExcelUtil.exportToXLSX(
-				articleService.exportToExcel(type, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,
+				articleService.exportToExcel(exportType, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,
 						appTitle, author, editor, isScore, scoreId),
 				fileNameBuilder.toString(), new Sheet(1, 0, ArticleModel.class), response);
 	}
@@ -83,7 +70,7 @@ public class ArticleController {
 	}
 	
 	@GetMapping("")
-	public Result<List<Article>> findAll(@RequestParam(required = false) Integer type, @RequestParam(required = false) NewsType newsType,
+	public Result<List<Article>> findAll(@RequestParam(required = false) ExportType exportType, @RequestParam(required = false) NewsType newsType,
 			@RequestParam(required = false) String paperStartTime, @RequestParam(required = false) String paperEndTime,
 			@RequestParam(required = false) String appStartTime, @RequestParam(required = false) String appEndTime,
 			@RequestParam(required = false) String paperTitle, @RequestParam(required = false) String appTitle,
@@ -91,13 +78,18 @@ public class ArticleController {
 			@RequestParam(required = false) Integer isScore, @RequestParam(required = false) Integer scoreId,
 			@RequestParam(required = false, defaultValue = "1") Integer pageNum, @RequestParam(required = false, defaultValue = "100") Integer pageSize, 
 			@RequestParam(required = false) String orderBy, HttpServletRequest request, HttpServletResponse response) {
-		return articleService.findAll(type, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, 
+		return articleService.findAll(exportType, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, 
 				paperTitle, appTitle, author, editor, isScore, scoreId, pageNum, pageSize, orderBy);
 	}
 	
 	@GetMapping("/{id}")
 	public Result<Article> findById(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
 		return articleService.findById(id);
+	}
+	
+	@GetMapping("/exportType")
+	public Result<List<Map<String, Object>>> findExportType() {
+		return new Result<List<Map<String, Object>>>(ExportType.getList());
 	}
 	
 	@GetMapping("/score")

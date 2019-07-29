@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
 
 /**
@@ -17,7 +18,7 @@ public class Article {
 	
 	private Long id;
 	
-	private Integer type;
+	private ExportType exportType;
 	
 	private NewsType newsType;
 	
@@ -72,12 +73,12 @@ public class Article {
 		this.id = id;
 	}
 
-	public Integer getType() {
-		return type;
+	public ExportType getExportType() {
+		return exportType;
 	}
 
-	public void setType(Integer type) {
-		this.type = type;
+	public void setExportType(ExportType exportType) {
+		this.exportType = exportType;
 	}
 
 	public NewsType getNewsType() {
