@@ -169,14 +169,13 @@
 			,a.editor
 			,a.wordCount
 			,a.url
-			,acc.clickCount
+			,(SELECT SUM(acc.clickCount) FROM t_article_click_count acc WHERE acc.title = a.appTitle) AS clickCount
 			,asr.scoreId AS asr_scoreId
 			,asr.score AS asr_score
 			,asr.remark AS asr_remark
 			,IFNULL(ROUND(asra.percent/100 * asr.score, 2), asr.score) AS authorScore
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
-		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		<include refid="Where_Clause"/>
 	</select>
@@ -192,14 +191,13 @@
 			,a.editor
 			,a.wordCount
 			,a.url
-			,acc.clickCount
+			,(SELECT SUM(acc.clickCount) FROM t_article_click_count acc WHERE acc.title = a.appTitle) AS clickCount
 			,asr.scoreId
 			,asr.score
 			,IFNULL(ROUND(asra.percent*asr.score/100,2), asr.score) AS authorScore
 			,asr.remark
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
-		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		<include refid="Where_Clause"/>
 		<choose>
@@ -230,7 +228,7 @@
 			,a.editor
 			,a.wordCount
 			,a.url
-			,acc.clickCount
+			,(SELECT SUM(acc.clickCount) FROM t_article_click_count acc WHERE acc.title = a.appTitle) AS clickCount
 			,asr.id AS asr_id
 			,asr.scoreId AS asr_scoreId
 			,asr.score AS asr_score
@@ -245,7 +243,6 @@
 			,asra.updateTime as asra_updateTime
 		FROM t_article a 
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
-		LEFT JOIN t_article_click_count acc ON acc.title = a.appTitle
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		where a.id = #{id}
 	</select>
