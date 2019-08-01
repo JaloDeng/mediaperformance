@@ -52,6 +52,18 @@ public class Result<T> {
 	
 	/**
 	 * 结果集
+	 * @param data 数据
+	 * @param message 信息
+	 * @param success true:成功, false:失败
+	 */
+	public Result(T data, String message, Boolean success) {
+		this.data = data;
+		this.message = message;
+		this.success = success;
+	}
+	
+	/**
+	 * 结果集
 	 * @param message 信息
 	 * @param success true:成功, false:失败
 	 */

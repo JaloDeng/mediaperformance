@@ -18,7 +18,6 @@ import com.foshanplus.mediaperformance.mapper.ArticleMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordAuthorMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordMapper;
-import com.foshanplus.mediaperformance.result.Result;
 import com.github.pagehelper.Page;
 
 /**
@@ -43,20 +42,15 @@ public class ArticleService {
 	@Autowired
 	private ArticleScoreRecordAuthorMapper articleScoreRecordAuthorMapper;
 
-	public Result<Article> save(Article article) {
-		try {
-			if (article.getId() != null) {
-				articleMapper.update(article);
-				saveArticleScoreRecord(article);
-				return new Result<Article>("修改成功", true);
-			} else {
-				articleMapper.add(article);
-				saveArticleScoreRecord(article);
-				return new Result<Article>("新增成功", true);
-			}
-		} catch (Exception e) {
-			return new Result<Article>("保存失败 : " + e.toString(), false);
+	public Integer save(Article article) throws Exception {
+		Integer count;
+		if (article.getId() != null) {
+			count = articleMapper.update(article);
+		} else {
+			count = articleMapper.add(article);
 		}
+		saveArticleScoreRecord(article);
+		return count;
 	}
 	
 	public List<ArticleModel> exportToExcel(ExportType exportType, NewsType newsType, String paperStartTime, String paperEndTime, String appStartTime,
@@ -66,32 +60,26 @@ public class ArticleService {
 				appTitle, author, editor, isScore, scoreId);
 	}
 	
-	public Result<Article> delete(Long id) {
+	public Integer delete(Long id) throws Exception {
 		if (articleScoreRecordMapper.countByArticleId(id) > 0) {
-			return new Result<Article>("删除失败 : 已打分的数据不能删除", false);
+			throw new Exception("删除失败 : 已打分的数据不能删除");
 		}
-		try {
-			articleMapper.delete(id);
-			return new Result<Article>("删除成功", true);
-		} catch (Exception e) {
-			return new Result<Article>("删除失败 : " + e.toString(), false);
-		}
+		return articleMapper.delete(id);
 	}
 	
-	public Result<List<Article>> findAll(ExportType exportType, NewsType newsType, String paperStartTime, String paperEndTime, String appStartTime,
+	public Page<Article> findAll(ExportType exportType, NewsType newsType, String paperStartTime, String paperEndTime, String appStartTime,
 			String appEndTime, String paperTitle, String appTitle, String author, String editor, Integer isScore,
 			Integer scoreId, Integer pageNum, Integer pageSize, String orderBy) {
-		Page<Article> articles = articleMapper.findAll(exportType, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, 
+		return articleMapper.findAll(exportType, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, 
 				paperTitle, appTitle, author, editor, isScore, scoreId, pageNum, pageSize, orderBy);
-		return new Result<List<Article>>(articles, articles.getPageNum(), articles.getPageSize(), articles.getTotal(), articles.getPages());
 	}
 
-	public Result<Article> findById(Long id) {
-		return new Result<Article>(articleMapper.findById(id), null, null, null, null);
+	public Article findById(Long id) {
+		return articleMapper.findById(id);
 	}
 	
-	public Result<List<ArticleScore>> findArticleScoreAll() {
-		return new Result<List<ArticleScore>>(articleScoreMapper.findAll());
+	public List<ArticleScore> findArticleScoreAll() {
+		return articleScoreMapper.findAll();
 	}
 	
 	private void saveArticleScoreRecord(Article article) throws Exception {

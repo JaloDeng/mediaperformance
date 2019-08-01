@@ -27,7 +27,7 @@ public interface ArticleMapper {
 			@Param("author") String author, @Param("editor") String editor, 
 			@Param("isScore") Integer isScore, @Param("scoreId") Integer scoreId);
 	
-	public void delete(Long id);
+	public Integer delete(Long id);
 
 	public Page<Article> findAll(@Param("exportType") ExportType exportType, @Param("newsType") NewsType newsType,
 			@Param("paperStartTime") String paperStartTime, @Param("paperEndTime") String paperEndTime,
@@ -39,6 +39,6 @@ public interface ArticleMapper {
 	
 	public Article findById(Long id);
 
-	public void update(Article article);
+	public Integer update(Article article);
 	
 }
