@@ -1,4 +1,4 @@
-package com.foshanplus.mediaperformance.bean.excel;
+package com.foshanplus.mediaperformance.model.excel;
 
 import java.math.BigDecimal;
 

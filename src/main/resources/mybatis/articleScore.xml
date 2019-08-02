@@ -3,7 +3,7 @@
   
 <mapper namespace="com.foshanplus.mediaperformance.mapper.ArticleScoreMapper" >
 
-	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.ArticleScore" >
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.ArticleScore" >
 		<result column="id" property="id"/>
 		<result column="score" property="score"/>
 		<result column="description" property="description"/>

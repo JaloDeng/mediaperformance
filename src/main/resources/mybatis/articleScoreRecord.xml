@@ -3,7 +3,7 @@
   
 <mapper namespace="com.foshanplus.mediaperformance.mapper.ArticleScoreRecordMapper" >
 
-	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.ArticleScoreRecord" >
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.ArticleScoreRecord" >
 		<result column="id" property="id"/>
 		<result column="articleId" property="articleId"/>
 		<result column="newsSourceId" property="newsSourceId"/>
@@ -21,12 +21,12 @@
 		id, articleId, newsSourceId, newsTransferId, scoreId, score, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
-	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord" useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_article_score_record(articleId, newsSourceId, newsTransferId, scoreId, score, remark, createUser, updateUser)
 		values(#{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{score}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
-	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
+	<update id="update" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord">
 		UPDATE t_article_score_record 
 		SET 
 			scoreId = #{scoreId}

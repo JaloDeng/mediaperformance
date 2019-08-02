@@ -1,4 +1,4 @@
-package com.foshanplus.mediaperformance.bean;
+package com.foshanplus.mediaperformance.entity;
 
 import java.math.BigDecimal;
 import java.util.Date;

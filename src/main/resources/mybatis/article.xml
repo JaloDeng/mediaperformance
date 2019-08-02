@@ -3,7 +3,7 @@
   
 <mapper namespace="com.foshanplus.mediaperformance.mapper.ArticleMapper" >
 
-	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.Article" >
 		<result column="id" property="id"/>
 		<result column="exportType" property="exportType"/>
 		<result column="newsType" property="newsType"/>
@@ -25,7 +25,7 @@
 		<result column="createTime" property="createTime"/>
 		<result column="updateUser" property="updateUser"/>
 		<result column="updateTime" property="updateTime"/>
-		<association property="articleScoreRecord" javaType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
+		<association property="articleScoreRecord" javaType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord">
 			<result column="asr_id" property="id"/>
 			<result column="asr_articleId" property="articleId"/>
 			<result column="asr_newsSourceId" property="newsSourceId"/>
@@ -38,7 +38,7 @@
 			<result column="asr_updateUser" property="updateUser"/>
 			<result column="asr_updateTime" property="updateTime"/>
 		</association>
-		<collection property="articleScoreRecordAuthors" ofType="com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor">
+		<collection property="articleScoreRecordAuthors" ofType="com.foshanplus.mediaperformance.entity.ArticleScoreRecordAuthor">
 			<result column="asra_id" property="id"/>
 			<result column="asra_scoreRecordId" property="scoreRecordId"/>
 			<result column="asra_author" property="author"/>
@@ -50,7 +50,7 @@
 		</collection>
 	</resultMap>
 	
-	<resultMap id="ListResultMap" type="com.foshanplus.mediaperformance.bean.Article" >
+	<resultMap id="ListResultMap" type="com.foshanplus.mediaperformance.entity.Article" >
 		<result column="id" property="id"/>
 		<result column="exportType" property="exportType"/>
 		<result column="newsType" property="newsType"/>
@@ -73,7 +73,7 @@
 		<result column="createTime" property="createTime"/>
 		<result column="updateUser" property="updateUser"/>
 		<result column="updateTime" property="updateTime"/>
-		<association property="articleScoreRecord" javaType="com.foshanplus.mediaperformance.bean.ArticleScoreRecord">
+		<association property="articleScoreRecord" javaType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord">
 			<result column="asr_id" property="id"/>
 			<result column="asr_articleId" property="articleId"/>
 			<result column="asr_newsSourceId" property="newsSourceId"/>
@@ -132,7 +132,7 @@
 		</where>
 	</sql>
 	
-	<insert id="add" parameterType="com.foshanplus.mediaperformance.bean.Article">
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.Article">
 		INSERT INTO t_article(
 			  exportType, newsType, newsSourceId, newsTransferId
 			, paperPublishTime, appPublishTime, pageName, category
@@ -180,7 +180,7 @@
 		<include refid="Where_Clause"/>
 	</select>
 	
-	<select id="exportToExcel" resultType="com.foshanplus.mediaperformance.bean.excel.ArticleExcelModel">
+	<select id="exportToExcel" resultType="com.foshanplus.mediaperformance.model.excel.ArticleExcelModel">
 		SELECT 
 			a.paperPublishTime
 			,a.appPublishTime
@@ -247,7 +247,7 @@
 		where a.id = #{id}
 	</select>
 	
-	<update id="update" parameterType="com.foshanplus.mediaperformance.bean.Article">
+	<update id="update" parameterType="com.foshanplus.mediaperformance.entity.Article">
 		update t_article
 		<set>
 			<if test="exportType != null">

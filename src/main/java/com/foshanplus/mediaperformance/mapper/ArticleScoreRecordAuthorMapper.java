@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor;
+import com.foshanplus.mediaperformance.entity.ArticleScoreRecordAuthor;
 
 /**
  * @author Jalo Deng

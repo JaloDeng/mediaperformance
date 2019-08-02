@@ -2,7 +2,7 @@ package com.foshanplus.mediaperformance.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.foshanplus.mediaperformance.bean.ArticleScoreRecord;
+import com.foshanplus.mediaperformance.entity.ArticleScoreRecord;
 
 /**
  * @author Jalo Deng

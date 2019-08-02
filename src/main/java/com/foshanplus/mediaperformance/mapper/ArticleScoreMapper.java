@@ -2,7 +2,7 @@ package com.foshanplus.mediaperformance.mapper;
 
 import java.util.List;
 
-import com.foshanplus.mediaperformance.bean.ArticleScore;
+import com.foshanplus.mediaperformance.entity.ArticleScore;
 
 /**
  * @author Jalo Deng

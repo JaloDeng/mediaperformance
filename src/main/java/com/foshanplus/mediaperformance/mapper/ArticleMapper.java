@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.foshanplus.mediaperformance.bean.Article;
-import com.foshanplus.mediaperformance.bean.excel.ArticleExcelModel;
+import com.foshanplus.mediaperformance.entity.Article;
 import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
+import com.foshanplus.mediaperformance.model.excel.ArticleExcelModel;
 import com.github.pagehelper.Page;
 
 /**
