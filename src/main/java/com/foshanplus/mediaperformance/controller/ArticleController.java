@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.excel.metadata.Sheet;
 import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.ArticleScore;
-import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
+import com.foshanplus.mediaperformance.bean.excel.ArticleExcelModel;
 import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
 import com.foshanplus.mediaperformance.result.Result;
@@ -61,7 +61,7 @@ public class ArticleController {
 		EasyExcelUtil.exportToXLSX(
 				articleService.exportToExcel(exportType, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,
 						appTitle, author, editor, isScore, scoreId),
-				fileNameBuilder.toString(), new Sheet(1, 0, ArticleModel.class), response);
+				fileNameBuilder.toString(), new Sheet(1, 0, ArticleExcelModel.class), response);
 	}
 	
 	@PutMapping("")

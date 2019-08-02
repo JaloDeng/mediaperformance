@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  * @date 2019-07-25 11:11
  */
 
-public class ArticleModel extends BaseRowModel {
+public class ArticleExcelModel extends BaseRowModel {
 
 	@ExcelProperty(value = "见报日期", index = 0)
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

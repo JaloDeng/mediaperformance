@@ -11,7 +11,7 @@ import com.foshanplus.mediaperformance.bean.Article;
 import com.foshanplus.mediaperformance.bean.ArticleScore;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecord;
 import com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor;
-import com.foshanplus.mediaperformance.bean.excel.ArticleModel;
+import com.foshanplus.mediaperformance.bean.excel.ArticleExcelModel;
 import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
 import com.foshanplus.mediaperformance.mapper.ArticleMapper;
@@ -53,7 +53,7 @@ public class ArticleService {
 		return count;
 	}
 	
-	public List<ArticleModel> exportToExcel(ExportType exportType, NewsType newsType, String paperStartTime, String paperEndTime, String appStartTime,
+	public List<ArticleExcelModel> exportToExcel(ExportType exportType, NewsType newsType, String paperStartTime, String paperEndTime, String appStartTime,
 			String appEndTime, String paperTitle, String appTitle, String author, String editor, Integer isScore,
 			Integer scoreId) {
 		return articleMapper.exportToExcel(exportType, newsType, paperStartTime, paperEndTime, appStartTime, appEndTime, paperTitle,

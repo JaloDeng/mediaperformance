@@ -180,7 +180,7 @@
 		<include refid="Where_Clause"/>
 	</select>
 	
-	<select id="exportToExcel" resultType="com.foshanplus.mediaperformance.bean.excel.ArticleModel">
+	<select id="exportToExcel" resultType="com.foshanplus.mediaperformance.bean.excel.ArticleExcelModel">
 		SELECT 
 			a.paperPublishTime
 			,a.appPublishTime
