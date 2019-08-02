@@ -7,17 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.foshanplus.mediaperformance.bean.Article;
-import com.foshanplus.mediaperformance.bean.ArticleScore;
-import com.foshanplus.mediaperformance.bean.ArticleScoreRecord;
-import com.foshanplus.mediaperformance.bean.ArticleScoreRecordAuthor;
-import com.foshanplus.mediaperformance.bean.excel.ArticleExcelModel;
+import com.foshanplus.mediaperformance.entity.Article;
+import com.foshanplus.mediaperformance.entity.ArticleScore;
+import com.foshanplus.mediaperformance.entity.ArticleScoreRecord;
+import com.foshanplus.mediaperformance.entity.ArticleScoreRecordAuthor;
 import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
 import com.foshanplus.mediaperformance.mapper.ArticleMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordAuthorMapper;
 import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordMapper;
+import com.foshanplus.mediaperformance.model.excel.ArticleExcelModel;
 import com.github.pagehelper.Page;
 
 /**
@@ -27,7 +27,6 @@ import com.github.pagehelper.Page;
  */
 
 @Service
-@Transactional
 public class ArticleService {
 
 	@Autowired
@@ -42,6 +41,7 @@ public class ArticleService {
 	@Autowired
 	private ArticleScoreRecordAuthorMapper articleScoreRecordAuthorMapper;
 
+	@Transactional
 	public Integer save(Article article) throws Exception {
 		Integer count;
 		if (article.getId() != null) {
@@ -60,6 +60,7 @@ public class ArticleService {
 				appTitle, author, editor, isScore, scoreId);
 	}
 	
+	@Transactional
 	public Integer delete(Long id) throws Exception {
 		if (articleScoreRecordMapper.countByArticleId(id) > 0) {
 			throw new Exception("删除失败 : 已打分的数据不能删除");
