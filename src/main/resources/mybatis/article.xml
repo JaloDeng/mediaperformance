@@ -68,6 +68,7 @@
 		<result column="wordCount" property="wordCount"/>
 		<result column="url" property="url"/>
 		<result column="authorScore" property="authorScore"/>
+		<result column="canDelete" property="canDelete"/>
 		<result column="clickCount" property="clickCount"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
@@ -174,6 +175,7 @@
 			,asr.score AS asr_score
 			,asr.remark AS asr_remark
 			,IFNULL(ROUND(asra.percent/100 * asr.score, 2), asr.score) AS authorScore
+			,IF(asra.percent IS NULL, false, true) AS canDelete
 		FROM t_article a
 		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id

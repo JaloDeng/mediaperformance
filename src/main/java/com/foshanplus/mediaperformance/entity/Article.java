@@ -64,6 +64,8 @@ public class Article {
 	private List<ArticleScoreRecordAuthor> articleScoreRecordAuthors;
 	
 	private BigDecimal authorScore;
+	
+	private Boolean canDelete;
 
 	public Long getId() {
 		return id;
@@ -255,6 +257,14 @@ public class Article {
 
 	public void setAuthorScore(BigDecimal authorScore) {
 		this.authorScore = authorScore;
+	}
+
+	public Boolean getCanDelete() {
+		return canDelete;
+	}
+
+	public void setCanDelete(Boolean canDelete) {
+		this.canDelete = canDelete;
 	}
 
 }
