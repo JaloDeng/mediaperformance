@@ -137,16 +137,20 @@
 		INSERT INTO t_article(
 			  exportType, newsType, newsSourceId, newsTransferId
 			, paperPublishTime, appPublishTime, pageName, category
-			, paperTitle, appTitle, author, editor, wordCount, url
-			, createUser, createTime, updateUser, updateTime
+			, paperTitle, appTitle, author, editor
+			, wordCount, url, createUser, updateUser
 		)
 		values(
 			  #{exportType}, #{newsType}, #{newsSourceId}, #{newsTransferId}
 			, #{paperPublishTime}, #{appPublishTime}, #{pageName}, #{category}
-			, #{paperTitle}, #{appTitle}, #{author}, #{editor}, #{wordCount}, #{url}
-			, #{createUser}, #{createTime}, #{updateUser}, #{updateTime}
+			, #{paperTitle}, #{appTitle}, #{author}, #{editor}
+			, #{wordCount}, #{url}, #{createUser}, #{updateUser}
 		)
 	</insert>
+	
+	<select id="countByNewsTransferId" resultType="java.lang.Integer">
+		SELECT COUNT(1) FROM t_article WHERE newsTransferId = #{newsTransferId}
+	</select>
 	
 	<delete id="delete" parameterType="java.lang.Long">
 		DELETE FROM t_article WHERE id = #{id}
@@ -259,40 +263,40 @@
 				newsType = #{newsType},
 			</if>
 			<if test="paperPublishTime != null">
-				paperPublishTime = #{paperPublishTime, jdbcType = DATE},
+				paperPublishTime = #{paperPublishTime},
 			</if>
 			<if test="appPublishTime != null">
-				appPublishTime = #{appPublishTime, jdbcType = TIMESTAMP},
+				appPublishTime = #{appPublishTime},
 			</if>
 			<if test="pageName != null">
-				pageName = #{pageName, jdbcType = VARCHAR},
+				pageName = #{pageName},
 			</if>
 			<if test="category != null">
-				category = #{category, jdbcType = VARCHAR},
+				category = #{category},
 			</if>
 			<if test="paperTitle != null">
-				paperTitle = #{paperTitle, jdbcType = VARCHAR},
+				paperTitle = #{paperTitle},
 			</if>
 			<if test="appTitle != null">
-				appTitle = #{appTitle, jdbcType = VARCHAR},
+				appTitle = #{appTitle},
 			</if>
 			<if test="author != null">
-				author = #{author, jdbcType = VARCHAR},
+				author = #{author},
 			</if>
 			<if test="editor != null">
-				editor = #{editor, jdbcType = VARCHAR},
+				editor = #{editor},
 			</if>
 			<if test="wordCount != null">
-				wordCount = #{wordCount, jdbcType = INTEGER},
+				wordCount = #{wordCount},
 			</if>
 			<if test="url != null">
-				url = #{url, jdbcType = VARCHAR},
+				url = #{url},
 			</if>
 			<if test="updateUser != null">
-				updateUser = #{updateUser, jdbcType = VARCHAR},
+				updateUser = #{updateUser},
 			</if>
 			<if test="updateTime != null">
-				updateTime = #{updateTime, jdbcType = TIMESTAMP},
+				updateTime = #{updateTime},
 			</if>
 		</set>
 		where id = #{id}

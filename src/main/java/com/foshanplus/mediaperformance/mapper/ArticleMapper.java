@@ -27,6 +27,8 @@ public interface ArticleMapper {
 			@Param("author") String author, @Param("editor") String editor, 
 			@Param("isScore") Integer isScore, @Param("scoreId") Integer scoreId);
 	
+	public Integer countByNewsTransferId(Long newsTransferId);
+	
 	public Integer delete(Long id);
 
 	public Page<Article> findAll(@Param("exportType") ExportType exportType, @Param("newsType") NewsType newsType,

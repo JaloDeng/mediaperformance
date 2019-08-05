@@ -47,6 +47,9 @@ public class ArticleService {
 		if (article.getId() != null) {
 			count = articleMapper.update(article);
 		} else {
+			if (articleMapper.countByNewsTransferId(article.getNewsTransferId()) > 0) {
+				throw new RuntimeException("此记录已经存在，请确认再添加！");
+			}
 			count = articleMapper.add(article);
 		}
 		saveArticleScoreRecord(article);
