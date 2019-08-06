@@ -28,6 +28,8 @@ public class Article {
 	
 	private Long newsTransferId;
 	
+	private String newsTransferIds;
+	
 	@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
 	private Date paperPublishTime;
 	
@@ -45,7 +47,7 @@ public class Article {
 	
 	private String editor;
 	
-	private String wordCount;
+	private Integer wordCount;
 	
 	private String url;
 	
@@ -115,6 +117,14 @@ public class Article {
 		this.newsTransferId = newsTransferId;
 	}
 
+	public String getNewsTransferIds() {
+		return newsTransferIds;
+	}
+
+	public void setNewsTransferIds(String newsTransferIds) {
+		this.newsTransferIds = newsTransferIds;
+	}
+
 	public Date getPaperPublishTime() {
 		return paperPublishTime;
 	}
@@ -179,11 +189,11 @@ public class Article {
 		this.editor = editor;
 	}
 
-	public String getWordCount() {
+	public Integer getWordCount() {
 		return wordCount;
 	}
 
-	public void setWordCount(String wordCount) {
+	public void setWordCount(Integer wordCount) {
 		this.wordCount = wordCount;
 	}
 

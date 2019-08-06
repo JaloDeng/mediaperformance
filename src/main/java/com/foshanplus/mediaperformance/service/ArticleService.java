@@ -44,12 +44,14 @@ public class ArticleService {
 	@Transactional
 	public Integer save(Article article) throws Exception {
 		Integer count;
+		article.setUpdateUser("SYSTEM");
 		if (article.getId() != null) {
 			count = articleMapper.update(article);
 		} else {
 			if (articleMapper.countByNewsTransferId(article.getNewsTransferId()) > 0) {
 				throw new RuntimeException("此记录已经存在，请确认再添加！");
 			}
+			article.setUpdateUser("SYSTEM");
 			count = articleMapper.add(article);
 		}
 		saveArticleScoreRecord(article);
@@ -101,7 +103,7 @@ public class ArticleService {
 		} else {
 			articleScoreRecordMapper.update(articleScoreRecord);
 		}
-		if (articleScoreRecord.getScoreId() != null && articleScoreRecord.getScoreId() != "") {
+		if (articleScoreRecord.getScoreId() != null && articleScoreRecord.getScoreId() != "" && article.getArticleScoreRecordAuthors() != null) {
 			saveArticleScoreRecordAuthor(articleScoreRecord, article.getArticleScoreRecordAuthors());
 		}
 	}
