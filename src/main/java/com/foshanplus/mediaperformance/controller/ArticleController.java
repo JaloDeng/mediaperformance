@@ -39,7 +39,7 @@ import com.github.pagehelper.Page;
 @RequestMapping("/article")
 public class ArticleController {
 
-	private static final Logger log = LoggerFactory.getLogger(ArticleController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ArticleController.class);
 	
 	@Autowired
 	private ArticleService articleService;
@@ -69,7 +69,7 @@ public class ArticleController {
 		try {
 			return new Result<>(articleService.save(article), "保存成功", true);
 		} catch (Exception e) {
-			log.error(e.toString());
+			logger.error(e.toString());
 			return new Result<>(0, "保存失败：" + e.getMessage(), false);
 		}
 	}
@@ -79,7 +79,7 @@ public class ArticleController {
 		try {
 			return new Result<>(articleService.delete(id), "删除成功", true);
 		} catch (Exception e) {
-			log.error(e.toString());
+			logger.error(e.toString());
 			return new Result<Integer>(0, "删除失败：" + e.getMessage(), false);
 		}
 	}
