@@ -10,6 +10,7 @@
 		<result column="newsTransferId" property="newsTransferId"/>
 		<result column="scoreId" property="scoreId"/>
 		<result column="score" property="score"/>
+		<result column="imageCount" property="imageCount"/>
 		<result column="remark" property="remark"/>
 		<result column="createUser" property="createUser"/>
 		<result column="createTime" property="createTime"/>
@@ -18,12 +19,12 @@
 	</resultMap>
 	
 	<sql id="Base_List" >
-		id, articleId, newsSourceId, newsTransferId, scoreId, score, remark, createUser, createTime, updateUser, updateTime
+		id, articleId, newsSourceId, newsTransferId, scoreId, score, imageCount, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO t_article_score_record(articleId, newsSourceId, newsTransferId, scoreId, score, remark, createUser, updateUser)
-		values(#{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{score}, #{remark}, #{createUser}, #{updateUser})
+		INSERT INTO t_article_score_record(articleId, newsSourceId, newsTransferId, scoreId, score, imageCount, remark, createUser, updateUser)
+		values(#{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{score}, #{imageCount}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
 	<update id="update" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord">
@@ -31,6 +32,7 @@
 		SET 
 			scoreId = #{scoreId}
 			, score = #{score}
+			, imageCount = #{imageCount}
 			, remark = #{remark}
 			, updateUser = #{updateUser} 
 		WHERE newsTransferId = #{newsTransferId}

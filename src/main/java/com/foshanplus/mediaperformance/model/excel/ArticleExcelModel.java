@@ -42,19 +42,22 @@ public class ArticleExcelModel extends BaseRowModel {
 	@ExcelProperty(value = "浏览量", index = 8)
 	private Integer clickCount;
 	
-	@ExcelProperty(value = "等级", index = 9)
+	@ExcelProperty(value = "图片数量", index = 9)
+	private Integer imageCount;
+	
+	@ExcelProperty(value = "等级", index = 10)
 	private String scoreId;
 	
-	@ExcelProperty(value = "文章分数", index = 10)
+	@ExcelProperty(value = "文章分数", index = 11)
 	private Integer score;
 	
-	@ExcelProperty(value = "作者分数", index = 11)
+	@ExcelProperty(value = "作者分数", index = 12)
 	private BigDecimal authorScore;
 	
-	@ExcelProperty(value = "链接", index = 12)
+	@ExcelProperty(value = "链接", index = 13)
 	private String url;
 	
-	@ExcelProperty(value = "备注", index = 13)
+	@ExcelProperty(value = "备注", index = 14)
 	private String remark;
 
 	public String getPaperPublishTime() {
@@ -127,6 +130,14 @@ public class ArticleExcelModel extends BaseRowModel {
 
 	public void setClickCount(Integer clickCount) {
 		this.clickCount = clickCount;
+	}
+
+	public Integer getImageCount() {
+		return imageCount;
+	}
+
+	public void setImageCount(Integer imageCount) {
+		this.imageCount = imageCount;
 	}
 
 	public String getScoreId() {

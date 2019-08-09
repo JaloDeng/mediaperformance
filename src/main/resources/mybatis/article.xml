@@ -33,6 +33,7 @@
 			<result column="asr_newsTransferId" property="newsTransferId"/>
 			<result column="asr_scoreId" property="scoreId"/>
 			<result column="asr_score" property="score"/>
+			<result column="asr_imageCount" property="imageCount"/>
 			<result column="asr_remark" property="remark"/>
 			<result column="asr_createUser" property="createUser"/>
 			<result column="asr_createTime" property="createTime"/>
@@ -83,6 +84,7 @@
 			<result column="asr_newsTransferId" property="newsTransferId"/>
 			<result column="asr_scoreId" property="scoreId"/>
 			<result column="asr_score" property="score"/>
+			<result column="asr_imageCount" property="imageCount"/>
 			<result column="asr_remark" property="remark"/>
 			<result column="asr_createUser" property="createUser"/>
 			<result column="asr_createTime" property="createTime"/>
@@ -178,6 +180,7 @@
 			,a.wordCount
 			,a.url
 			,(SELECT SUM(acc.clickCount) FROM t_article_click_count acc WHERE acc.title = a.appTitle) AS clickCount
+			,asr.imageCount AS asr_imageCount
 			,asr.scoreId AS asr_scoreId
 			,asr.score AS asr_score
 			,asr.remark AS asr_remark
@@ -203,6 +206,7 @@
 			,(SELECT SUM(acc.clickCount) FROM t_article_click_count acc WHERE acc.title = a.appTitle) AS clickCount
 			,asr.scoreId
 			,asr.score
+			,asr.imageCount
 			,IFNULL(ROUND(asra.percent*asr.score/100,2), asr.score) AS authorScore
 			,asr.remark
 		FROM t_article a
@@ -242,6 +246,7 @@
 			,asr.id AS asr_id
 			,asr.scoreId AS asr_scoreId
 			,asr.score AS asr_score
+			,asr.imageCount AS asr_imageCount
 			,asr.remark AS asr_remark
 			,asra.id as asra_id
 			,asra.scoreRecordId as asra_scoreRecordId
