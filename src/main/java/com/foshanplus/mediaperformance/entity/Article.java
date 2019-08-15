@@ -18,6 +18,8 @@ public class Article {
 	
 	private Long id;
 	
+	private Long parentId;
+	
 	private ExportType exportType;
 	
 	private NewsType newsType;
@@ -75,6 +77,14 @@ public class Article {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 
 	public ExportType getExportType() {

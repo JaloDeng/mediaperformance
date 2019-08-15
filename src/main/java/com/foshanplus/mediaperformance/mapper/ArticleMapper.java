@@ -27,7 +27,7 @@ public interface ArticleMapper {
 			@Param("author") String author, @Param("editor") String editor, 
 			@Param("isScore") Integer isScore, @Param("scoreId") Integer scoreId);
 	
-	public Integer countByNewsTransferId(Long newsTransferId);
+	public Integer countByParentId(Long id);
 	
 	public Integer delete(Long id);
 

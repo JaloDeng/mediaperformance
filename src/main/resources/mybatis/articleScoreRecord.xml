@@ -5,6 +5,7 @@
 
 	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.ArticleScoreRecord" >
 		<result column="id" property="id"/>
+		<result column="parentId" property="parentId"/>
 		<result column="articleId" property="articleId"/>
 		<result column="newsSourceId" property="newsSourceId"/>
 		<result column="newsTransferId" property="newsTransferId"/>
@@ -19,23 +20,23 @@
 	</resultMap>
 	
 	<sql id="Base_List" >
-		id, articleId, newsSourceId, newsTransferId, scoreId, score, imageCount, remark, createUser, createTime, updateUser, updateTime
+		id, parentId, articleId, newsSourceId, newsTransferId, scoreId, score, imageCount, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO t_article_score_record(articleId, newsSourceId, newsTransferId, scoreId, score, imageCount, remark, createUser, updateUser)
-		values(#{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{score}, #{imageCount}, #{remark}, #{createUser}, #{updateUser})
+		INSERT INTO t_article_score_record(parentId, articleId, newsSourceId, newsTransferId, scoreId, score, imageCount, remark, createUser, updateUser)
+		values(#{parentId}, #{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{score}, #{imageCount}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
 	<update id="update" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord">
 		UPDATE t_article_score_record 
 		SET 
-			scoreId = #{scoreId}
+			  scoreId = #{scoreId}
 			, score = #{score}
 			, imageCount = #{imageCount}
 			, remark = #{remark}
 			, updateUser = #{updateUser} 
-		WHERE newsTransferId = #{newsTransferId}
+		WHERE articleId = #{articleId}
 	</update>
 	
 	<select id="countByArticleId" resultType="java.lang.Integer">
@@ -43,14 +44,6 @@
 			COUNT(1) 
 		FROM t_article_score_record asr 
 		WHERE asr.articleId = #{articleId}
-	</select>
-	
-	<select id="countByNewsTransferId" resultType="java.lang.Integer">
-		SELECT 
-			COUNT(1) 
-		FROM t_article_score_record asr 
-		WHERE asr.newsTransferId = #{newsTransferId} 
-			OR asr.articleId = #{articleId}
 	</select>
 	
 </mapper>

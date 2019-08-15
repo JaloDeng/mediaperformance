@@ -5,6 +5,7 @@
 
 	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.Article" >
 		<result column="id" property="id"/>
+		<result column="parentId" property="parentId"/>
 		<result column="exportType" property="exportType"/>
 		<result column="newsType" property="newsType"/>
 		<result column="newsTypeLabel" property="newsTypeLabel"/>
@@ -54,6 +55,7 @@
 	
 	<resultMap id="ListResultMap" type="com.foshanplus.mediaperformance.entity.Article" >
 		<result column="id" property="id"/>
+		<result column="parentId" property="parentId"/>
 		<result column="exportType" property="exportType"/>
 		<result column="newsType" property="newsType"/>
 		<result column="newsTypeLabel" property="newsTypeLabel"/>
@@ -94,8 +96,8 @@
 	</resultMap>
 	
 	<sql id="Article_List" >
-		id, exportType, newsType, newsSourceId, newsTransferId, newsTransferIds, paperPublishTime, appPublishTime, pageName, category, 
-		paperTitle, appTitle, author, editor, wordCount, url, createUser, createTime, updateUser, updateTime
+		id, parentId, exportType, newsType, newsSourceId, newsTransferId, newsTransferIds, paperPublishTime, appPublishTime, pageName, 
+		category, paperTitle, appTitle, author, editor, wordCount, url, createUser, createTime, updateUser, updateTime
 	</sql>
 	
 	<sql id="Where_Clause">
@@ -139,22 +141,23 @@
 	
 	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.Article" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_article(
-			  exportType, newsType, newsSourceId, newsTransferId
+			  parentId, exportType, newsType, newsSourceId, newsTransferId
 			, paperPublishTime, appPublishTime, pageName, category
 			, paperTitle, appTitle, author, editor
 			, wordCount, url, createUser, updateUser
 		)
 		values(
-			  #{exportType}, #{newsType}, #{newsSourceId}, #{newsTransferId}
+			  #{parentId}, #{exportType}, #{newsType}, #{newsSourceId}, #{newsTransferId}
 			, #{paperPublishTime}, #{appPublishTime}, #{pageName}, #{category}
 			, #{paperTitle}, #{appTitle}, #{author}, #{editor}
 			, #{wordCount}, #{url}, #{createUser}, #{updateUser}
 		)
 	</insert>
 	
-	<select id="countByNewsTransferId" resultType="java.lang.Integer">
-		SELECT COUNT(1) FROM t_article WHERE newsTransferId = #{newsTransferId}
-	</select>
+	<select id="countByParentId" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM t_article WHERE parentId = #{id}
+    </select>
+    
 	
 	<delete id="delete" parameterType="java.lang.Long">
 		DELETE FROM t_article WHERE id = #{id}
@@ -162,7 +165,8 @@
 	
 	<select id="findAll" resultMap="ListResultMap">
 		SELECT 
-			a.id
+			 a.id
+			,a.parentId
 			,a.exportType
 			,a.newsType
 			,a.newsSourceId
@@ -187,14 +191,14 @@
 			,IFNULL(ROUND(asra.percent/100 * asr.score, 2), asr.score) AS authorScore
 			,IF(asra.percent IS NULL, false, true) AS canDelete
 		FROM t_article a
-		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
+		LEFT JOIN t_article_score_record asr ON asr.articleId = a.id
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		<include refid="Where_Clause"/>
 	</select>
 	
 	<select id="exportToExcel" resultType="com.foshanplus.mediaperformance.model.excel.ArticleExcelModel">
 		SELECT 
-			a.paperPublishTime
+			 a.paperPublishTime
 			,a.appPublishTime
 			,CASE a.newsType WHEN 'TEXT' THEN '文字稿' WHEN 'IMAGE' THEN '图片稿' WHEN 'AUDIOANDVIDEO' THEN '音视频' ELSE '' END AS newsTypeLabel
 			,a.paperTitle
@@ -210,7 +214,7 @@
 			,IFNULL(ROUND(asra.percent*asr.score/100,2), asr.score) AS authorScore
 			,asr.remark
 		FROM t_article a
-		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
+		LEFT JOIN t_article_score_record asr ON asr.articleId = a.id
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		<include refid="Where_Clause"/>
 		<choose>
@@ -226,7 +230,8 @@
 	
 	<select id="findById" resultMap="BaseResultMap">
 		SELECT 
-			a.id
+			 a.id
+			,a.parentId
 			,a.exportType
 			,a.newsType
 			,a.newsSourceId
@@ -257,7 +262,7 @@
 			,asra.updateUser as asra_updateUser
 			,asra.updateTime as asra_updateTime
 		FROM t_article a 
-		LEFT JOIN t_article_score_record asr ON asr.newsTransferId = a.newsTransferId
+		LEFT JOIN t_article_score_record asr ON asr.articleId = a.id
 		LEFT JOIN t_article_score_record_author asra ON asra.scoreRecordId = asr.id
 		where a.id = #{id}
 	</select>

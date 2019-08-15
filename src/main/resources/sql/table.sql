@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS `media_performance`.`t_article_score_record`;
 DROP TABLE IF EXISTS `media_performance`.`t_article_score_record_author`;
 CREATE TABLE `t_article` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `parentId` bigint(20) DEFAULT NULL COMMENT '父ID，用于记录从数据如图片、视频类稿件，t_article.id',
   `exportType` enum('APP','APPTOPAPER','PAPERTOAPP','PAPER') DEFAULT 'APP' COMMENT '导出类型，APP：只发APP、APPTOPAPER：先发APP再发纸媒、PAPERTOAPP：先发纸媒再发APP、PAPER：只发报纸',
   `newsType` enum('TEXT','IMAGE','AUDIOANDVIDEO') DEFAULT 'TEXT' COMMENT '文章类型，TEXT：文字稿、IMAGE：图片稿，AUDIOANDVIDEO：音视频',
   `newsSourceId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newssource.id、newssourceid',
@@ -52,6 +53,7 @@ CREATE TABLE `t_article_score` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='等级评分表';
 CREATE TABLE `t_article_score_record` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+  `parentId` bigint(20) DEFAULT NULL COMMENT '父ID，用于记录从数据如图片、视频类稿件打分情况，t_article_score_record.id',
   `articleId` bigint(20) DEFAULT NULL COMMENT '文章主键ID，t_article.id',
   `newsSourceId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newssource.id、newssourceid',
   `newsTransferId` bigint(20) DEFAULT NULL COMMENT '采编平台，t_newstransfer.id',

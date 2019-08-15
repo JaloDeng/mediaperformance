@@ -18,6 +18,4 @@ public interface ArticleScoreRecordMapper {
 	
 	public Integer countByArticleId(@Param("articleId") Long articleId);
 	
-	public Integer countByNewsTransferId(@Param("articleId") Long articleId, @Param("newsTransferId") Long newsTransferId);
-	
 }

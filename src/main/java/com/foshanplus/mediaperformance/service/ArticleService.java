@@ -48,10 +48,7 @@ public class ArticleService {
 		if (article.getId() != null) {
 			count = articleMapper.update(article);
 		} else {
-			if (articleMapper.countByNewsTransferId(article.getNewsTransferId()) > 0) {
-				throw new RuntimeException("此记录已经存在，请确认再添加！");
-			}
-			article.setUpdateUser("SYSTEM");
+			article.setCreateUser("SYSTEM");
 			count = articleMapper.add(article);
 		}
 		saveArticleScoreRecord(article);
@@ -67,8 +64,10 @@ public class ArticleService {
 	
 	@Transactional
 	public Integer delete(Long id) throws Exception {
-		if (articleScoreRecordMapper.countByArticleId(id) > 0) {
-			throw new Exception("删除失败 : 已打分的数据不能删除");
+		if (articleMapper.countByParentId(id) > 0) {
+			throw new Exception("该记录存在稿件素材数据，请先删除稿件素材数据再删除该数据");
+		} else if (articleScoreRecordMapper.countByArticleId(id) > 0) {
+			throw new Exception("已打分的数据不能删除");
 		}
 		return articleMapper.delete(id);
 	}
@@ -94,7 +93,7 @@ public class ArticleService {
 		articleScoreRecord.setNewsSourceId(article.getNewsSourceId());
 		articleScoreRecord.setNewsTransferId(article.getNewsTransferId());
 		articleScoreRecord.setUpdateUser("SYSTEM");
-		if (articleScoreRecordMapper.countByNewsTransferId(article.getId(), article.getNewsTransferId()) == 0) {
+		if (articleScoreRecordMapper.countByArticleId(article.getId()) == 0) {
 			if ((articleScoreRecord.getScoreId() != null && articleScoreRecord.getScoreId() != "")
 					|| (articleScoreRecord.getRemark() != null && articleScoreRecord.getRemark() != "")) {
 				articleScoreRecord.setCreateUser("SYSTEM");
