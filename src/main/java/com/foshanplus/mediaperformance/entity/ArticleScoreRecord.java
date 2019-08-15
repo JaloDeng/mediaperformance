@@ -24,7 +24,7 @@ public class ArticleScoreRecord {
 	
 	private Integer score;
 	
-	private Integer imageCount;
+	private Integer sourceCount;
 	
 	private String remark;
 	
@@ -100,12 +100,12 @@ public class ArticleScoreRecord {
 		this.score = score;
 	}
 
-	public Integer getImageCount() {
-		return imageCount;
+	public Integer getSourceCount() {
+		return sourceCount;
 	}
 
-	public void setImageCount(Integer imageCount) {
-		this.imageCount = imageCount;
+	public void setSourceCount(Integer sourceCount) {
+		this.sourceCount = sourceCount;
 	}
 
 	public String getCreateUser() {

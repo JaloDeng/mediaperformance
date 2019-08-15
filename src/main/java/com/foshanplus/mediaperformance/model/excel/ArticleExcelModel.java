@@ -42,8 +42,8 @@ public class ArticleExcelModel extends BaseRowModel {
 	@ExcelProperty(value = "浏览量", index = 8)
 	private Integer clickCount;
 	
-	@ExcelProperty(value = "图片数量", index = 9)
-	private Integer imageCount;
+	@ExcelProperty(value = "素材数量", index = 9)
+	private Integer sourceCount;
 	
 	@ExcelProperty(value = "等级", index = 10)
 	private String scoreId;
@@ -132,12 +132,12 @@ public class ArticleExcelModel extends BaseRowModel {
 		this.clickCount = clickCount;
 	}
 
-	public Integer getImageCount() {
-		return imageCount;
+	public Integer getSourceCount() {
+		return sourceCount;
 	}
 
-	public void setImageCount(Integer imageCount) {
-		this.imageCount = imageCount;
+	public void setSourceCount(Integer sourceCount) {
+		this.sourceCount = sourceCount;
 	}
 
 	public String getScoreId() {
