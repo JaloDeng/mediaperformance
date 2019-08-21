@@ -3,7 +3,7 @@
   
 <mapper namespace="com.foshanplus.mediaperformance.mapper.master.ArticleScoreRecordMapper" >
 
-	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.ArticleScoreRecord" >
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.master.ArticleScoreRecord" >
 		<result column="id" property="id"/>
 		<result column="parentId" property="parentId"/>
 		<result column="articleId" property="articleId"/>
@@ -23,12 +23,12 @@
 		id, parentId, articleId, newsSourceId, newsTransferId, scoreId, score, sourceCount, remark, createUser, createTime, updateUser, updateTime
 	</sql>
 	
-	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord" useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.master.ArticleScoreRecord" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_article_score_record(parentId, articleId, newsSourceId, newsTransferId, scoreId, score, sourceCount, remark, createUser, updateUser)
 		values(#{parentId}, #{articleId}, #{newsSourceId}, #{newsTransferId}, #{scoreId}, #{score}, #{sourceCount}, #{remark}, #{createUser}, #{updateUser})
 	</insert>
 	
-	<update id="update" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecord">
+	<update id="update" parameterType="com.foshanplus.mediaperformance.entity.master.ArticleScoreRecord">
 		UPDATE t_article_score_record 
 		SET 
 			  scoreId = #{scoreId}

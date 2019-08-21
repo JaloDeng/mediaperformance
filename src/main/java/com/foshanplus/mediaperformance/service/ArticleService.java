@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.foshanplus.mediaperformance.entity.Article;
-import com.foshanplus.mediaperformance.entity.ArticleScore;
-import com.foshanplus.mediaperformance.entity.ArticleScoreRecord;
-import com.foshanplus.mediaperformance.entity.ArticleScoreRecordAuthor;
+import com.foshanplus.mediaperformance.entity.master.Article;
+import com.foshanplus.mediaperformance.entity.master.ArticleScore;
+import com.foshanplus.mediaperformance.entity.master.ArticleScoreRecord;
+import com.foshanplus.mediaperformance.entity.master.ArticleScoreRecordAuthor;
 import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
 import com.foshanplus.mediaperformance.mapper.master.ArticleMapper;

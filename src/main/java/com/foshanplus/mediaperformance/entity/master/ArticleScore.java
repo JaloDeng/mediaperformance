@@ -1,4 +1,4 @@
-package com.foshanplus.mediaperformance.entity;
+package com.foshanplus.mediaperformance.entity.master;
 
 /**
  * @author Jalo Deng

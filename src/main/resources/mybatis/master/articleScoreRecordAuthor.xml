@@ -3,7 +3,7 @@
   
 <mapper namespace="com.foshanplus.mediaperformance.mapper.master.ArticleScoreRecordAuthorMapper" >
 
-	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.ArticleScoreRecordAuthor" >
+	<resultMap id="BaseResultMap" type="com.foshanplus.mediaperformance.entity.master.ArticleScoreRecordAuthor" >
 		<result column="id" property="id"/>
 		<result column="scoreRecordId" property="scoreRecordId"/>
 		<result column="author" property="author"/>
@@ -18,12 +18,12 @@
 		id, scoreRecordId, author, percent, createUser, createTime, updateUser, updateTime
 	</sql>
 	
-	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecordAuthor" useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" parameterType="com.foshanplus.mediaperformance.entity.master.ArticleScoreRecordAuthor" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_article_score_record_author(scoreRecordId, author, percent, createUser, updateUser)
 		values(#{scoreRecordId}, #{author}, #{percent}, #{createUser}, #{updateUser})
 	</insert>
 	
-	<update id="update" parameterType="com.foshanplus.mediaperformance.entity.ArticleScoreRecordAuthor">
+	<update id="update" parameterType="com.foshanplus.mediaperformance.entity.master.ArticleScoreRecordAuthor">
 		UPDATE t_article_score_record_author 
 		SET 
 			author = #{author}

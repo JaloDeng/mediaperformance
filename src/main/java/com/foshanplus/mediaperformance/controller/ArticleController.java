@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.excel.metadata.Sheet;
-import com.foshanplus.mediaperformance.entity.Article;
-import com.foshanplus.mediaperformance.entity.ArticleScore;
+import com.foshanplus.mediaperformance.entity.master.Article;
+import com.foshanplus.mediaperformance.entity.master.ArticleScore;
 import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
 import com.foshanplus.mediaperformance.model.excel.ArticleExcelModel;
