@@ -13,10 +13,10 @@ import com.foshanplus.mediaperformance.entity.ArticleScoreRecord;
 import com.foshanplus.mediaperformance.entity.ArticleScoreRecordAuthor;
 import com.foshanplus.mediaperformance.enums.ExportType;
 import com.foshanplus.mediaperformance.enums.NewsType;
-import com.foshanplus.mediaperformance.mapper.ArticleMapper;
-import com.foshanplus.mediaperformance.mapper.ArticleScoreMapper;
-import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordAuthorMapper;
-import com.foshanplus.mediaperformance.mapper.ArticleScoreRecordMapper;
+import com.foshanplus.mediaperformance.mapper.master.ArticleMapper;
+import com.foshanplus.mediaperformance.mapper.master.ArticleScoreMapper;
+import com.foshanplus.mediaperformance.mapper.master.ArticleScoreRecordAuthorMapper;
+import com.foshanplus.mediaperformance.mapper.master.ArticleScoreRecordMapper;
 import com.foshanplus.mediaperformance.model.excel.ArticleExcelModel;
 import com.github.pagehelper.Page;
 

@@ -1,4 +1,4 @@
-package com.foshanplus.mediaperformance.mapper;
+package com.foshanplus.mediaperformance.mapper.master;
 
 import java.util.List;
 
